@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Эдуард Маликов](https://up.htmlacademy.ru/nodejs-2/4/user/2201533).
-* Наставник: `Неизвестно`.
+* Наставник: [Артем Макаров](https://htmlacademy.ru/profile/id429879).
 
 ---
 
