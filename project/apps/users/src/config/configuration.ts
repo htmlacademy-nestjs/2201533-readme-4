@@ -1,4 +1,4 @@
-import {getMongoURI} from '../helpers/mongo-connection-string';
+import {getMongoURI} from '../../../../libs/util/util-core/src/lib/helpers';
 import {ConfigurationInterface} from './configuration.interface';
 
 export const configuration = (): ConfigurationInterface => ({

@@ -1,38 +1,55 @@
-import { Injectable } from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
-import {User, UserDocument} from './schemas/user.schema';
-import {Model} from 'mongoose';
-import {CreateUserDto} from "./dto/create-user.dto";
+import {ConflictException, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import {CreateUserDto} from './dto/create-user.dto';
 import {ConfigService} from '@nestjs/config';
+import {UsersRepository} from './users.repository';
+import {User} from '@project/shared/shared-types';
+import {UserEntity} from './user.entity';
+import {USER_EXISTS, USER_NOT_FOUND, USER_PASSWORD_WRONG} from './user,constants';
+import {LoginUserDto} from './dto/login-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private configService: ConfigService
+    private readonly userRepository: UsersRepository,
+    private configService: ConfigService,
   ) {}
 
-  public async create(dto:CreateUserDto, salt:string): Promise<User> {
-    const user = new UserEntity(dto);
-    user.setPassword(dto.password, salt);
-    const result = this.userModel.create(user);
-    this.logger.info(`New user created: ${user.email}`);
+  public async register(dto:CreateUserDto): Promise<User> {
+    const {email, name, password, avatarPath} = dto;
 
-    return result;
-  }
+    const user = {
+      email, name, avatarPath,
+      password: '',
+    };
+    const existedUser = await this.userRepository.findByEmail(email);
 
-  public async findByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({email});
-  }
-
-  public async findOrCreate(dto: CreateUserDto): Promise<User> {
-    const existedUser = await this.findByEmail(dto.email);
     if (existedUser) {
-      return existedUser;
+      throw new ConflictException(USER_EXISTS);
     }
-    const salt = this.configService.get('SALT');
 
-    return this.create(dto, salt);
+    const userEntity = await new UserEntity(user)
+      .setPassword(password)
+    return this.userRepository.create(userEntity);
+  }
+
+  public async verifyUser(dto: LoginUserDto) {
+    const {email, password} = dto;
+    const existedUser = await this.userRepository.findByEmail(email);
+
+    if (!existedUser) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
+
+    const userEntity = new UserEntity(existedUser);
+    if (!await userEntity.comparePassword(password)) {
+      throw new UnauthorizedException(USER_PASSWORD_WRONG);
+    }
+
+    return userEntity.toObject();
+  }
+
+  public async getUser(id: string) {
+    return this.userRepository.findById(id);
   }
 
 }
