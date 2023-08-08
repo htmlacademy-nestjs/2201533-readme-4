@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  type         String
+  createDate   DateTime @default(now()) @map("create_date")
+  pubData      DateTime @default(now())
+  isPublished  Boolean  @default(true) @map("is_published")
+  likeCount    Int      @default(0) @map("like_count")
+  commentCount Int      @default(0) @map("comment_count")
+  contentId    Int      @map("content_id")
+  isRepost     Boolean  @default(false) @map("is_repost")
+  originalId   Int?     @map("original_id")
+  original     Post?    @relation("PostReposts", fields: [originalId], references: [id])
+  reposts      Post[]   @relation("PostReposts")
+  tags         Tag[]
+
+  @@index([pubData])
+  @@index([likeCount])
+  @@index([commentCount])
+  @@index([userId])
+  @@map("posts")
+}
+
+model Video {
+  id    Int    @id @default(autoincrement())
+  title String
+  url   String
+
+  @@map("videos")
+}
+
+model Text {
+  id           Int    @id @default(autoincrement())
+  title        String
+  announcement String
+  text         String
+
+  @@map("texts")
+}
+
+model Quote {
+  id     Int    @id @default(autoincrement())
+  author String
+  text   String
+
+  @@map("quotes")
+}
+
+model Photo {
+  id   Int    @id @default(autoincrement())
+  path String
+
+  @@map("photos")
+}
+
+model Link {
+  id          Int    @id @default(autoincrement())
+  url         String
+  description String
+
+  @@map("links")
+}
+
+model Tag {
+  idTag Int    @id @default(autoincrement()) @map("id_tag")
+  tag   String
+  posts Post[]
+
+  @@index([tag])
+  @@map("tags")
+}
