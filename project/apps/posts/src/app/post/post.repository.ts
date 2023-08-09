@@ -1,9 +1,11 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {CRUDRepository} from '@project/util/util-types';
 import {PostEntity} from './post.entity';
 import { Post } from '@project/shared/shared-types';
 import {PrismaService} from '../prisma/prisma.service';
 import {ContentRepository} from '../content/content.repository';
+import {PostsFilterDto} from "./dto/posts-filter.dto";
+import {makePrismaFilters} from "./helpers/post-query.helpers";
 
 @Injectable()
 export class PostRepository implements CRUDRepository<PostEntity, number, Post> {
@@ -27,8 +29,9 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     });
   }
 
-  public find(): Promise<Post[]> {
-
+  public find(queryFilters: PostsFilterDto): Promise<Post[]> {
+    const filters = makePrismaFilters(queryFilters);
+    console.log(filters);
     return this.prisma.post.findMany({
       where: {
         // userId: '11',
@@ -41,6 +44,9 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
       },
       include: {
         tags: true
+      },
+      orderBy: {
+        commentCount: 'desc'
       }
     });
   }
@@ -53,8 +59,8 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     });
   }
 
-  public async findById(id: number): Promise<Post | null> {
-    return this.prisma.post.findFirstOrThrow({
+  public async findById(id: number): Promise<Post> {
+    return await this.prisma.post.findFirstOrThrow({
       where: {id},
       include: {tags: true}
     })

@@ -8,6 +8,7 @@ import {UpdatePostDto} from './dto/update-post.dto';
 import {ContentRepository} from '../content/content.repository';
 import {ContentEntities} from '../content/content.entity';
 import {PrismaService} from "../prisma/prisma.service";
+import {PostsFilterDto} from "./dto/posts-filter.dto";
 
 @Injectable()
 export class PostService {
@@ -46,8 +47,8 @@ export class PostService {
     return {...post, content: content};
   }
 
-  async getPosts() {
-    return this.postRepository.find();
+  async getPosts(filters: PostsFilterDto) {
+    return this.postRepository.find(filters);
   }
 
   async deletePost(id: number) {
