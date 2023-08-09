@@ -2,6 +2,12 @@
 
 ## Получить список постов по фильтру
 
-GET http://localhost:3000/posts?userId=1&type=text&tags=tag1 tag2 tag3&sort=like&page=next HTTP/1.1
+GET http://localhost:3000/posts?userId=1&type=text&tags=tag1 tag2 tag3&sort=like HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3000/posts?userId=1&type=text&tags=tag1 tag2 tag3 HTTP/1.1
 
 ###

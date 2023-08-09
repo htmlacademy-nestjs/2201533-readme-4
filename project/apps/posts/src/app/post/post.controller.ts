@@ -4,6 +4,9 @@ import {CreatePostDto} from './dto/create-post.dto';
 import {fillObject} from '@project/util/util-core';
 import {PostRdo} from './rdo/post.rdo';
 import {UpdatePostDto} from './dto/update-post.dto';
+import {PostQueryPipe} from "./pipes/post-query.pipe";
+import {PostFilters} from "./post.filters";
+import {PostsFilterDto} from "./dto/posts-filter.dto";
 
 @Controller('posts')
 export class PostController {
@@ -27,12 +30,13 @@ export class PostController {
 
   @Get('/')
   async index(
-    @Query('userId') userId?: string,
-    @Query('sort') sort?: string,
-    @Query('type') type?: string,
-    @Query('tags') tags?: string,
+    //@Query('userId') userId?: string,
+    // @Query('sort') sort?: string,
+    // @Query('type') type?: string,
+    // @Query('tags') tags?: string,
+    @Query(new PostQueryPipe()) filters: PostsFilterDto
   ) {
-
+    return filters;
     const posts = await this.postService.getPosts();
     // return {
     //   userId: userId,

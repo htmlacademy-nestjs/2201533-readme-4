@@ -8,3 +8,4 @@ export * from './lib/text.interface';
 export * from './lib/type.enum';
 export * from './lib/video.interface';
 export * from './lib/content.type';
+export * from './lib/sort-fields.enum';
