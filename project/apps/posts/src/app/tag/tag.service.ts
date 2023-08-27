@@ -14,4 +14,9 @@ export class TagService {
     const tagEntity = new TagEntity(dto);
     return this.tagRepository.create(tagEntity);
   }
+
+  async clearTags(tags: Tag[]) {
+    await this.tagRepository.clear(tags);
+  }
+
 }

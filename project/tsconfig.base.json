@@ -15,7 +15,37 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@project/config/config-comments": [
+        "libs/config/config-comments/src/index.ts"
+      ],
+      "@project/config/config-modules": [
+        "libs/config/config-modules/src/index.ts"
+      ],
+      "@project/config/config-notify": [
+        "libs/config/config-notify/src/index.ts"
+      ],
+      "@project/config/config-posts": ["libs/config/config-posts/src/index.ts"],
+      "@project/config/config-uploader": [
+        "libs/config/config-uploader/src/index.ts"
+      ],
+      "@project/config/config-users": ["libs/config/config-users/src/index.ts"],
+      "@project/models/comments-models": [
+        "libs/models/comments-models/src/index.ts"
+      ],
+      "@project/models/follower-models": [
+        "libs/models/follower-models/src/index.ts"
+      ],
+      "@project/models/mongo-schemas": [
+        "libs/models/mongo-schemas/src/index.ts"
+      ],
       "@project/models/post-models": ["libs/models/post-models/src/index.ts"],
+      "@project/shared/shared-consts": [
+        "libs/shared/shared-consts/src/index.ts"
+      ],
+      "@project/shared/shared-dto": ["libs/shared/shared-dto/src/index.ts"],
+      "@project/shared/shared-mediators": [
+        "libs/shared/shared-mediators/src/index.ts"
+      ],
       "@project/shared/shared-types": ["libs/shared/shared-types/src/index.ts"],
       "@project/util/util-core": ["libs/util/util-core/src/index.ts"],
       "@project/util/util-types": ["libs/util/util-types/src/index.ts"]

@@ -1,0 +1,48 @@
+# Comments
+
+## Создать комментарий
+
+POST http://localhost:3111/comment HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyMjY0NTAzLCJleHAiOjE2OTIzNTA5MDN9.Vv0TdX2_D9EpJv1bWTjL6ssq37c6IrzwAaxJp4n2e4E
+Content-Type: application/json
+
+{
+  "idPost": "1",
+  "text": "Это минимальный комментарий"
+}
+
+###
+
+## Создать комментарий
+
+POST http://localhost:3111/comment HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyMjY0NTAzLCJleHAiOjE2OTIzNTA5MDN9.Vv0TdX2_D9EpJv1bWTjL6ssq37c6IrzwAaxJp4n2e4E
+Content-Type: application/json
+
+{
+  "idPost": "2",
+  "text": "Это другой комментарий"
+}
+
+###
+
+## Удалить комментарий
+
+DELETE http://localhost:3111/comment/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyMjY0NTAzLCJleHAiOjE2OTIzNTA5MDN9.Vv0TdX2_D9EpJv1bWTjL6ssq37c6IrzwAaxJp4n2e4E
+
+###
+
+## Удалить комментарии
+
+DELETE http://localhost:3111/comment/post/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyMjY0NTAzLCJleHAiOjE2OTIzNTA5MDN9.Vv0TdX2_D9EpJv1bWTjL6ssq37c6IrzwAaxJp4n2e4E
+
+###
+
+
+## Получить комментарии
+
+GET http://localhost:3111/comment/1 HTTP/1.1
+
+

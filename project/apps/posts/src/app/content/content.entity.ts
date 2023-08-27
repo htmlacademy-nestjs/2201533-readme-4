@@ -1,8 +1,8 @@
-import {LinkEntity, makeLinkEntity} from './link/link.entity';
-import {makePhotoEntity, PhotoEntity} from './photo/photo.entity';
-import {makeQuoteEntity, QuoteEntity} from './quote/quote.entity';
-import {makeTextEntity, TextEntity} from './text/text.entity';
-import {makeVideoEntity, VideoEntity} from './video/video.entity';
+import {LinkEntity, makeLinkEntity} from './link.entity';
+import {makePhotoEntity, PhotoEntity} from './photo.entity';
+import {makeQuoteEntity, QuoteEntity} from './quote.entity';
+import {makeTextEntity, TextEntity} from './text.entity';
+import {makeVideoEntity, VideoEntity} from './video.entity';
 import {Type} from "@project/shared/shared-types";
 
 export type ContentEntity = LinkEntity | PhotoEntity | QuoteEntity | TextEntity | VideoEntity;

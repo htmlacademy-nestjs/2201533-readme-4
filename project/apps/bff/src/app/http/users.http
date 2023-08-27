@@ -1,0 +1,102 @@
+# Users
+
+## Создать нового пользователя
+
+POST http://localhost:4444/users/register HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar-angelina.jpg"
+Content-Type: image/jpeg
+
+< /Users/User/Pictures/avatar-angelina.jpg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user"
+Content-Type: text/plain
+
+{
+  "email": "tornsant@overbook.com",
+  "name": "Jack",
+  "password": "shining"
+}
+
+###
+
+## Создать нового пользователя с плохим аватаром
+
+POST http://localhost:4444/users/register HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar-angelina.jpg"
+Content-Type: image/jpeg
+
+< /Users/User/Documents/Палитра.txt
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user"
+Content-Type: text/plain
+
+{
+  "email": "tornsant@overbook.com",
+  "name": "Jack",
+  "password": "shining"
+}
+
+###
+
+##Get user by id
+
+GET http://localhost:4444/users/64e77cd6198bd9d7357660e0 HTTP/1.1
+
+###
+
+# Login user by email and password
+POST http://localhost:4444/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "torans@overlook.net",
+  "password": "111111"
+}
+
+###
+
+# Get new JWT pair
+POST http://localhost:4444/users/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwidG9rZW5JZCI6IjkyNTBjNGJlLTdiMDAtNGNhNy1hZDJiLWIxNDA3YWFhZDIwMiIsImlhdCI6MTY5Mjk0NDQzOCwiZXhwIjoxNjk1NTM2NDM4fQ.Jmp2HmP-Pf3tpAgXgSBZo7BYg2C_CfJbRP-4CPedvqU
+
+###
+
+
+# Change password
+PATCH http://localhost:4444/users/password HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+Content-Type: application/json
+
+{
+  "oldPassword": "222222",
+  "newPassword": "111111"
+}
+
+###
+
+
+# Create a new post
+POST http://localhost:4000/api/blog HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQwMzJmYmU0Y2FlYjg2OGM2ZWVjMzYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwiaWF0IjoxNjgzMTI0MTA5LCJleHAiOjE2ODMxMjQ3MDl9.oHiIvy7hGEuDaI7e7Jspbcd68_5CMKNe2qzkMV6bDe8
+Content-Type: application/json
+
+{
+  "title": "Проверка!!",
+  "description": "Текст анонса",
+  "content": "Расширенный текст публикации",
+  "categories": [1]
+}
+###
+
+#{
+#  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY",
+#  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwidG9rZW5JZCI6IjkyNTBjNGJlLTdiMDAtNGNhNy1hZDJiLWIxNDA3YWFhZDIwMiIsImlhdCI6MTY5Mjk0NDQzOCwiZXhwIjoxNjk1NTM2NDM4fQ.Jmp2HmP-Pf3tpAgXgSBZo7BYg2C_CfJbRP-4CPedvqU"
+#}

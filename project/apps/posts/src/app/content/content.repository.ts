@@ -29,8 +29,14 @@ export class ContentRepository implements CRUDRepository<ContentEntity, number, 
     });
   }
 
-  update(id: number, item: ContentEntity): Promise<ContentType> {
-    return Promise.resolve(undefined);
+  update(id: number, item: ContentEntity, type?: string, tx?: PrismaService): Promise<ContentType> {
+    const prisma = tx ? tx : this.prisma;
+    return prisma[type].update(
+      {
+        where: {id},
+        data: {...item.toUpdateEntity()}
+      }
+    )
   }
 
 }

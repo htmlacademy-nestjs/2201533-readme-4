@@ -1,0 +1,135 @@
+# Users
+
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "torans@overlook.net",
+  "avatar": "torrance.png",
+  "name": "Jack",
+  "password": "111111"
+}
+
+###
+
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "snow@pisem.local",
+  "avatar": "roland.jpg",
+  "name": "Bob",
+  "password": "111111"
+}
+
+###
+
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "president@dka.local",
+  "avatar": "user.jpg",
+  "name": "Иван Иванов",
+  "password": "111111"
+}
+
+###
+
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "fish@big.local",
+  "avatar": "photo.jpg",
+  "name": "Олег Сидоров",
+  "password": "111111"
+}
+
+###
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@pisem.local",
+  "avatar": "awesome-avatar.jpg",
+  "name": "Пьер Безухов",
+  "password": "111111"
+}
+
+###
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "freedom@pisem.local",
+  "avatar": "roland.jpg",
+  "name": "Роланд Дискейн",
+  "password": "111111"
+}
+
+###
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "rolan@pochta.local",
+  "avatar": "smite.jpg",
+  "name": "Холи Гибни",
+  "password": "111111"
+}
+
+###
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "author@mir.local",
+  "avatar": "coffee.jpg",
+  "name": "Джек Торренс",
+  "password": "111111"
+}
+
+###
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@lost.loca",
+  "avatar": "user.jpg",
+  "name": "Антон Городецкий",
+  "password": "111111"
+}
+
+###
+## Создать нового пользователя
+
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "kujo-fan@story.local",
+  "avatar": "photo.jpg",
+  "name": "Борис Гесер",
+  "password": "111111"
+}
+
+###

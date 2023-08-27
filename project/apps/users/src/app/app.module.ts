@@ -1,27 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import {UsersModule} from '../users/users.module';
-import {MongooseModule} from '@nestjs/mongoose';
-import {ConfigModule, ConfigService} from '@nestjs/config';
-import {configuration} from '../config/configuration';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
+import { ConfigUsersModule } from '@project/config/config-users';
+import { getMongooseOptions } from '@project/util/util-core';
+import { NotifyModule } from './notify/notify.module';
+import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 
 @Module({
   imports: [
-    UsersModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration]
-    }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('mongoUri'),
-      }),
-      inject: [ConfigService],
-    })
+    ConfigUsersModule,
+    MongooseModule.forRootAsync(getMongooseOptions('mongo')),
+    UserModule,
+    NotifyModule,
+    RefreshTokenModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

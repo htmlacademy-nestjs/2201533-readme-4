@@ -1,5 +1,6 @@
 import {Entity} from '@project/util/util-types';
-import {Post, Type, Tag} from '@project/shared/shared-types';
+import {Post, Tag} from '@project/shared/shared-types';
+import {Exclude, instanceToPlain} from 'class-transformer';
 
 export class PostEntity implements Entity<PostEntity>, Post {
   public id?: number;
@@ -10,7 +11,8 @@ export class PostEntity implements Entity<PostEntity>, Post {
   public isRepost: boolean;
   public likeCount: number;
   public originalId: number;
-  public pubData: Date;
+  public pubDate: Date;
+  @Exclude({toPlainOnly: true})
   public tags: Tag[];
   public type: string;
   public userId: string;
@@ -27,7 +29,7 @@ export class PostEntity implements Entity<PostEntity>, Post {
     this.isRepost = entity.isRepost;
     this.likeCount = entity.likeCount;
     this.originalId = entity.originalId;
-    this.pubData = entity.pubData;
+    this.pubDate = entity.pubDate;
     this.tags = [...entity.tags];
     this.type = entity.type;
     this.userId = entity.userId;
@@ -38,6 +40,10 @@ export class PostEntity implements Entity<PostEntity>, Post {
       ...this,
       tags: [...this.tags]
     };
+  }
+
+  toUpdateEntity(): object {
+    return instanceToPlain(this, {exposeUnsetFields: false});
   }
 
 }

@@ -1,0 +1,92 @@
+## Авторизовать пользователя
+
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "torans@overlook.net",
+  "password": "111111"
+}
+
+###
+
+## Авторизовать пользователя
+
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "snow@pisem.local",
+  "password": "111111"
+}
+
+###
+
+## Авторизовать пользователя
+
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "president@dka.local",
+  "password": "111111"
+}
+
+###
+
+## Авторизовать пользователя
+
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "fish@big.local",
+  "password": "111111"
+}
+
+###
+
+## Авторизовать пользователя
+
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@pisem.local",
+  "password": "111111"
+}
+
+###
+
+
+## Получить пользователя по id
+
+GET http://localhost:3000/users/1 HTTP/1.1
+
+###
+
+## Изменить пароль
+
+PATCH http://localhost:3000/users/1/password HTTP/1.1
+Content-Type: application/json
+
+{
+  "currentPassword": "111111",
+  "password": "222222"
+}
+
+###
+
+## Получить пользователя по id
+
+GET http://localhost:3000/users/1?name=name HTTP/1.1
+
+###
+
+## Подписка на email рассылку user: "snow@pisem.local"
+
+POST http://localhost:3000/users/subscribe HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM5OTZlMmM3NDA4MmZiYzdiNzBjZCIsImVtYWlsIjoic25vd0BwaXNlbS5sb2NhbCIsIm5hbWUiOiJCb2IiLCJpYXQiOjE2OTI1MTk4NTksImV4cCI6MTY5NTExMTg1OX0.wvXtCxwbjYugClkZl7zsw_SLhcqaANRD7kv8h-N2iCg
+Content-Type: text/plain
+
+###

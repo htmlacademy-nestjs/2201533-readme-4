@@ -1,0 +1,62 @@
+# Posts
+
+## Создать новый пост типа текст user: "torans@overlook.net"
+
+POST http://localhost:4444/posts HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="room.jpg"
+Content-Type: image/jpeg
+
+< /Users/User/Pictures/room.jpg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="post"
+Content-Type: text/plain
+
+{
+  "type": "photo",
+  "content": {
+    "path": "8.jpg"
+  },
+  "tags": [
+    "некрасов",
+    "дети",
+    "холод",
+    "дрова",
+    "барышев"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "torans@overlook.net"
+
+POST http://localhost:4444/posts HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="room.jpg"
+Content-Type: image/jpeg
+
+< /Users/User/Pictures/room.jpg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="post"
+Content-Type: text/plain
+
+{
+  "type": "photo",
+  "tags": [
+    "некрасов",
+    "дети",
+    "холод",
+    "дрова",
+    "барышев"
+  ]
+}
+
+###

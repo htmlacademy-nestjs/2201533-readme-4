@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../../../../node_modules/.prisma/client"
+  provider        = "prisma-client-js"
+  output          = "../../../../node_modules/@prisma/client/posts"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -16,7 +17,7 @@ model Post {
   userId       String
   type         String
   createDate   DateTime @default(now()) @map("create_date")
-  pubData      DateTime @default(now())
+  pubDate      DateTime @default(now()) @map("pub_date")
   isPublished  Boolean  @default(true) @map("is_published")
   likeCount    Int      @default(0) @map("like_count")
   commentCount Int      @default(0) @map("comment_count")
@@ -27,7 +28,7 @@ model Post {
   reposts      Post[]   @relation("PostReposts")
   tags         Tag[]
 
-  @@index([pubData])
+  @@index([pubDate])
   @@index([likeCount])
   @@index([commentCount])
   @@index([userId])
@@ -81,4 +82,21 @@ model Tag {
 
   @@index([tag])
   @@map("tags")
+}
+
+model Followers {
+  follower String
+  followed String
+
+  @@id([followed, follower])
+  @@map("followers")
+}
+
+view titles {
+  title      String
+  id         Int
+  type       String
+  content_id Int
+
+  @@unique([type, content_id])
 }

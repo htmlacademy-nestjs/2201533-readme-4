@@ -7,11 +7,12 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: test
       POSTGRES_DB: readme-posts
+      POSTGRES_EXTENSIONS: pg_trgm
     ports:
       - 5433:5432
     volumes:
       - readme.postgres.posts:/var/lib/postgresql/data
-
+      - ./db-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U admin -d readme-posts" ]
       interval: 10s

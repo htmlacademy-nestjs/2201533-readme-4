@@ -1,13 +1,61 @@
 # Posts
 
-## Получить список постов по фильтру 648993f802b256e0ca1cb09b
+## Получить список постов по фильтру
 
-GET http://localhost:3000/posts?userId=111111111111111111111111&type=text&tags=tag1 tag2 tag3&sort=likeCount HTTP/1.1
+GET http://localhost:3222/posts?userId=111111111111111111111111&type=text&tags=tag1 tag2 tag3&sort=likeCount HTTP/1.1
 
 ###
 
 ## Получить список постов по фильтру
 
-GET http://localhost:3000/posts?userId=111111111111111111111111&type=text&tags=tag1 tag2 tag3 HTTP/1.1
+GET http://localhost:3222/posts?userId=111111111111111111111111&type=text&tags=tag1 tag2 tag3 HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?userId=111111111111111111111111&type=text&tags=tag1 tag2 tag3 HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?type=text&tags=tag1 tag2 tag3 HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?tags=tag1 tag2 tag3 HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?userId=111111111111111111111111 HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?sort=likeCount HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?tags=зима раневская HTTP/1.1
+
+###
+
+## Получить список постов по фильтру
+
+GET http://localhost:3222/posts?limit=2&page=2 HTTP/1.1
 
 ###

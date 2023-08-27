@@ -1,7 +1,7 @@
-export interface User {
+export interface UserType {
   id?: string;
-  email: string;
-  name: string;
-  avatarPath: string;
-  password: string;
+  email?: string;
+  name?: string;
+  avatarId?: string;
+  password?: string;
 }
