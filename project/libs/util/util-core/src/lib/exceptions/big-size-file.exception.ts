@@ -1,4 +1,4 @@
-import {BadRequestException, UnauthorizedException} from "@nestjs/common";
+import {BadRequestException} from '@nestjs/common';
 import 'multer';
 export class BigSizeFileException extends BadRequestException {
   constructor(file: Express.Multer.File, max: number) {

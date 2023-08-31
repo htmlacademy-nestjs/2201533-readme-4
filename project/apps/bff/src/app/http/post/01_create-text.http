@@ -1,0 +1,70 @@
+# Posts
+
+## Создать новый пост типа текст user: "torans@overlook.net"
+
+POST http://localhost:4444/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге torans@overlook.net",
+    "announcement": "песнь степного коневодителя, и этот пост тоже должен torans@overlook.net",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик. И текст этого поста тоже должен."
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###
+
+## Пробуем ошибку валидации user: "torans@overlook.net"
+
+POST http://localhost:4444/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге",
+    "announcement": "песнь степного коневодителя",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик."
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "snow@pisem.local"
+
+POST http://localhost:4444/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM5OTZlMmM3NDA4MmZiYzdiNzBjZCIsImVtYWlsIjoic25vd0BwaXNlbS5sb2NhbCIsIm5hbWUiOiJCb2IiLCJpYXQiOjE2OTMzMTIwOTcsImV4cCI6MTY5NTkwNDA5N30.l0U5PE9RR4h1D_z-IDn96v3X-ADxpms_8gkRqJhg1lo
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "лес валю snow@pisem.local",
+    "announcement": "дровосек в зимнем лесу, добьём до пятидесяти snow@pisem.local",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "tags": [
+    "зима",
+    "лес",
+    "холод",
+    "дрова"
+  ]
+}
+
+###

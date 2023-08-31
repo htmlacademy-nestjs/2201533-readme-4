@@ -1,12 +1,12 @@
 import {Injectable} from '@nestjs/common';
 import {CRUDRepository} from '@project/util/util-types';
 import {PostEntity} from './post.entity';
-import {Post, SortFieldsEnum} from '@project/shared/shared-types';
+import {Counters, Post, SortFieldsEnum} from '@project/shared/shared-types';
 import {PrismaService} from '../prisma/prisma.service';
 import {PostFilter, GetPostsFilter} from './helpers/posts-filter.interface';
 import {makeGetPostsFilters} from './helpers/post-query.helpers';
 import {Prisma} from '@prisma/client/posts';
-import {SIMILARITY_LIMIT} from '../../../../../libs/shared/shared-consts/src/lib/post.constants';
+import {SIMILARITY_LIMIT} from '@project/shared/shared-consts';
 import dayjs from 'dayjs';
 import {getShowTapeQueryText} from "./helpers/getShowTapeQueryText";
 
@@ -26,9 +26,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
           connect: entityData.tags.map(({idTag}) => ({ idTag }))
         }
       },
-      include: {
-        tags: true
-      },
+      include: { tags: true },
     });
   }
 
@@ -42,7 +40,8 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
       where: {
         userId,
         isPublished: false
-      }
+      },
+      include: { tags: true }
     })
   }
 
@@ -52,8 +51,9 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
       Object.assign(data, {pubDate: dayjs()})
     }
     return this.prisma.post.update({
-      where: {id},
-      data: {isPublished: published}
+      where: {id: id},
+      data: {isPublished: published},
+      include: { tags: true }
     })
   }
 
@@ -79,20 +79,30 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
 
   public async findById(id: number): Promise<Post> {
     return this.prisma.post.findFirstOrThrow({
-      where: {id},
+      where: {id: id},
       include: {tags: true}
     })
   }
 
-  public async changeCount(id: number, field: SortFieldsEnum, difference: number) {
+  public async findOrNull(id: number): Promise<Post | null> {
+    return this.prisma.post.findFirst({
+      where: {id: id}
+    })
+  }
+
+  public async changeCount(id: number, field: Counters, difference: number) {
     const post = await this.findById(id);
-    const newCount = post[SortFieldsEnum[field]] + difference;
-    return this.prisma.post.update(
+    if (post === null) {
+      return null;
+    }
+    const newCount = post[Counters[field]] + difference;
+    const newPost = await this.prisma.post.update(
       {
         where: {id},
-        data: {[SortFieldsEnum[field]]: newCount}
+        data: {[Counters[field]]: newCount},
       }
     )
+    return newPost[Counters[field]];
   }
 
   public async disconnectTags(id: number, tx?: PrismaService): Promise<void> {
@@ -114,9 +124,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
       {
         where: {id},
         data: data,
-        include: {
-          tags: true
-        },
+        include: { tags: true },
       }
     )
   }

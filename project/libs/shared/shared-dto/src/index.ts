@@ -9,4 +9,6 @@ export * from './lib/posts/content/update-content.dto';
 export * from './lib/create-comment.dto';
 export * from './lib/follow.dto';
 export * from './lib/post.rdo';
-export * from './lib/constants';
+export * from './lib/comment.rdo';
+export * from './lib/users/update-user.dto';
+export * from './lib/follow.rdo';

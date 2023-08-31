@@ -1,2 +1,4 @@
-export const EMAIL_ADD_SUBSCRIBER_SUBJECT = 'Подписка на рассылку оформлена';
-export const EMAIL_NEW_POST = 'Размещена новая публикация';
+export const EmailSubjects = {
+  EMAIL_ADD_SUBSCRIBER: 'Подписка на рассылку оформлена',
+  EMAIL_NEW_POST: 'Размещена новая публикация'
+} as const;

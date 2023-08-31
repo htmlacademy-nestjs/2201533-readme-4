@@ -61,8 +61,8 @@ model Quote {
 }
 
 model Photo {
-  id   Int    @id @default(autoincrement())
-  path String
+  id      Int    @id @default(autoincrement())
+  idPhoto String @map("id_photo")
 
   @@map("photos")
 }

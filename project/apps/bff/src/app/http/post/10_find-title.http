@@ -1,0 +1,7 @@
+# Posts
+
+## Найти по титлу
+
+GET http://localhost:4444/posts/find?title=еду на коняге HTTP/1.1
+
+###

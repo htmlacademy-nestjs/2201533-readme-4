@@ -1,4 +1,4 @@
-import {FollowerEntity} from './follower-enttity';
+import {FollowerEntity} from './follower-entity';
 import {Follower} from '@project/shared/shared-types';
 import {PrismaService} from '../prisma/prisma.service';
 import {Injectable} from '@nestjs/common';
@@ -10,11 +10,11 @@ export class FollowerRepository
     private readonly prisma: PrismaService
   ) {}
   public async create(item: FollowerEntity): Promise<Follower> {
-    const rec = await this.prisma.followers.findFirst({
+    const record = await this.prisma.followers.findFirst({
       where: {...item}
     });
-    if (rec) {
-      return rec;
+    if (record) {
+      return record;
     }
     return this.prisma.followers.create({
        data: {...item.toObject()}
@@ -29,7 +29,16 @@ export class FollowerRepository
 
   public async count(followed: string): Promise<number> {
     return this.prisma.followers.count({
-      where: {followed}
+      where: {followed: followed}
+    })
+  }
+
+  public async findFollow(follower: string, followed: string) {
+    return this.prisma.followers.findFirst( {
+      where: {
+        followed,
+        follower
+      }
     })
   }
 

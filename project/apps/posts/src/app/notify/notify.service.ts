@@ -1,4 +1,4 @@
-import {Inject, Injectable, Logger} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {AmqpConnection} from '@golevelup/nestjs-rabbitmq';
 import {rabbitConfig} from '@project/util/util-core';
 import {ConfigType} from '@nestjs/config';
@@ -15,7 +15,6 @@ export class NotifyService {
   ) {}
 
   public async sendNewPost(rdo: EmailPostRdo) {
-    Logger.log('send mail');
     return this.rabbitClient.publish<EmailPostRdo>(
       this.rabbitOptions.exchange,
       RabbitRouting.SendNewsPost,

@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
 import {FollowerRepository} from './follower.repository';
 import {Follower} from '@project/shared/shared-types';
-import {FollowerEntity} from './follower-enttity';
+import {FollowerEntity} from './follower-entity';
 import {fillObject} from '@project/util/util-core';
-import {FollowDto} from '@project/shared/shared-dto';
+import {FollowDto, FollowRdo} from '@project/shared/shared-dto';
 
 @Injectable()
 export class FollowerService {
@@ -13,16 +13,17 @@ export class FollowerService {
   async follow(dto: Follower): Promise<Follower> {
     const entity = new FollowerEntity(dto);
     const rec = await this.followerRepository.create(entity);
-    return fillObject(Follower, rec);
+    return fillObject(FollowRdo, rec);
   }
 
-  async dontFollow(dto: Follower) {
+  async unFollow(dto: Follower) {
     const entity = new FollowerEntity(dto);
     await this.followerRepository.delete(entity);
   }
 
-  async count(dto: FollowDto) {
-    return this.followerRepository.count(dto.followed);
+  async count(followed: string) {
+    console.log('FollowerService follow', followed);
+    return this.followerRepository.count(followed);
   }
 
 }

@@ -14,3 +14,10 @@ export const getSortNames =
   () => Object.values(SortFieldsEnum).filter((item) => isNaN(Number(item)))
 
 export const DEFAULT_SORT = 'pubDate';
+
+export enum Counters {
+  likeCount,
+  commentCount,
+  postsCount,
+  followersCount
+}

@@ -9,14 +9,14 @@ export class ContentRepository implements CRUDRepository<ContentEntity, number, 
   constructor(private readonly prisma: PrismaService) {
   }
 
-  public async create(item: ContentEntity, type?: string, tx?: PrismaService){
-    return tx[type].create({
+  public async create(item: ContentEntity, type?: string, transaction?: PrismaService){
+    return transaction[type].create({
       data: {...item.toObject()}
     });
   }
 
-  public async delete(id: number, type?: string, tx?: PrismaService): Promise<void> {
-    await tx[type].delete({
+  public async delete(id: number, type?: string, transaction?: PrismaService): Promise<void> {
+    await transaction[type].delete({
       where: {
         id
       }
@@ -29,9 +29,8 @@ export class ContentRepository implements CRUDRepository<ContentEntity, number, 
     });
   }
 
-  update(id: number, item: ContentEntity, type?: string, tx?: PrismaService): Promise<ContentType> {
-    const prisma = tx ? tx : this.prisma;
-    return prisma[type].update(
+  update(id: number, item: ContentEntity, type?: string, transaction?: PrismaService): Promise<ContentType> {
+    return transaction[type].update(
       {
         where: {id},
         data: {...item.toUpdateEntity()}

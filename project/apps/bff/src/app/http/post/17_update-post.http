@@ -1,0 +1,25 @@
+# Posts
+
+## Редактировать пост типа текст
+
+PATCH http://localhost:4444/posts/9 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+Content-Type: application/json
+
+{
+  "content": {
+    "title": "лес валю, пилю и не жужжу",
+    "announcement": "дровосек в зимнем лесу валит лес пилит его и колет на дрова",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "isPublished": "false",
+  "pubDate": "2023-08-09T13:36:30.895Z",
+  "tags": [
+    "поле",
+    "тепло",
+    "аргон",
+    "лето"
+  ]
+}
+
+###

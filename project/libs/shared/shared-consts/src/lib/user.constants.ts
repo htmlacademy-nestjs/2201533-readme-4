@@ -1,16 +1,19 @@
 export const SALT_ROUNDS = 10;
-export const USER_EXISTS = 'User with this email exists';
-export const USER_NOT_FOUND = 'User not found';
-export const USER_PASSWORD_WRONG = 'User password is wrong';
 
-export const MAX_SIZE_AVATAR = 500 * 1024
+export const UserExceptionMessages = {
+  USER_EXISTS: 'User with this email-address already exists',
+  USER_NOT_FOUND: 'User not found',
+  USER_PASSWORD_WRONG: 'User login or password is wrong'
+} as const;
 
-export const userMin = {
-  name: 3,
-  password: 6
+export const MAX_SIZE_AVATAR = 500 * 1024;
+
+export enum userMin {
+  name = 3,
+  password = 6
 }
 
-export const userMax = {
-  name: 50,
-  password: 12
+export enum userMax {
+  name = 50,
+  password = 12
 }

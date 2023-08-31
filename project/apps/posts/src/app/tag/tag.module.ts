@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TagRepository } from './tag.repoditory';
+import { TagRepository } from './tag.repository';
 import { TagService } from './tag.service';
 
 @Module({

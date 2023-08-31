@@ -23,6 +23,9 @@ export class UserModel implements UserType {
 
   @Prop({ required: true, default: 0})
   postsCount: number;
+
+  @Prop({ required: true, default: 0})
+  followersCount: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);
