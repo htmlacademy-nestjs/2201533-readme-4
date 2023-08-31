@@ -1,5 +1,6 @@
 import {HttpStatus} from "@nestjs/common";
-import {PostRdo} from "../index";
+import {PostRdo} from "../../../shared-dto/src/lib/post.rdo";
+
 
 export const authHeader = (token: string) => ({
   headers: {
@@ -22,12 +23,23 @@ export const unauthorized = {
   description: 'Access token is wrong.',
 }
 
+export const notAuthor = {
+  status: HttpStatus.FORBIDDEN,
+  description: 'Forbidden to change the publications of another users',
+}
+
+export const existsRepost = {
+  status: HttpStatus.FORBIDDEN,
+  description: 'You have already reposted this post',
+}
+
+
 export const apiRefreshHeader = {
   name: 'Authorization',
   description: 'Refresh JWT-token',
 }
 
-export const wrongRefresh = {
+export const wrongRefreshToken = {
   status: HttpStatus.UNAUTHORIZED,
   description: 'Refresh token is wrong.',
 }

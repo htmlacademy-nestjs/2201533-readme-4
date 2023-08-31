@@ -1,8 +1,5 @@
 import {registerDecorator, ValidationOptions} from 'class-validator';
-function validateYouTubeUrl(url: string): boolean {
-  const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:embed\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:\S*)?$/;
-  return regExp.test(url);
-}
+import {validationRegExp} from "./validation.constants";
 
 export function IsYoutubeUrl(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
@@ -14,7 +11,7 @@ export function IsYoutubeUrl(validationOptions?: ValidationOptions) {
       options: validationOptions,
       validator: {
         validate(url: string) {
-          return  validateYouTubeUrl(url)
+          return  validationRegExp.isYouTubeUrl.test(url)
         }
       }
     });

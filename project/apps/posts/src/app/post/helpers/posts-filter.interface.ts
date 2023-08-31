@@ -3,7 +3,7 @@ import {DEFAULT_SORT, Type} from '@project/shared/shared-types';
 import {SortFieldsEnum} from '@project/shared/shared-types';
 import {Transform} from 'class-transformer';
 import {makeTagsArray} from './post-query.helpers';
-import {POSTS_RESPONSE_LIMIT} from "@project/shared/shared-consts";
+import {POSTS_RESPONSE_PAGE_LIMIT} from "@project/shared/shared-consts";
 
 export class PostFilter {
   @IsOptional()
@@ -13,7 +13,7 @@ export class PostFilter {
   @IsOptional()
   @IsNumber()
   @Transform((params) => parseInt(params.value, 10))
-  public limit: number = POSTS_RESPONSE_LIMIT;
+  public limit: number = POSTS_RESPONSE_PAGE_LIMIT;
 
   @IsOptional()
   @IsNumber()

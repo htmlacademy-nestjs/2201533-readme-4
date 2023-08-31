@@ -39,6 +39,9 @@
         "libs/models/mongo-schemas/src/index.ts"
       ],
       "@project/models/post-models": ["libs/models/post-models/src/index.ts"],
+      "@project/shared/shared-api-consts": [
+        "libs/shared/shared-api-consts/src/index.ts"
+      ],
       "@project/shared/shared-consts": [
         "libs/shared/shared-consts/src/index.ts"
       ],

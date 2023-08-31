@@ -1,9 +1,9 @@
-export const commentMin = {
-  comment: 10
+export enum commentMin {
+  commentLength = 10
 }
 
-export const commentMax = {
-  comment: 300
+export enum commentMax {
+  commentLength = 300
 }
 
-export const COMMENTS_RESPONSE_LIMIT= 50;
+export const COMMENTS_RESPONSE_PAGE_LIMIT= 50;

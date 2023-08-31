@@ -1,0 +1,8 @@
+# Posts
+
+## Получить ленту постов
+
+GET http://localhost:4444/posts/tape HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+
+###

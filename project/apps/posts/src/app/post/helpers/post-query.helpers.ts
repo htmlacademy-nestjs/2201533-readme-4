@@ -13,8 +13,6 @@ export const makeGetPostsFilters = (query: GetPostsFilter) => {
   const order: Prisma.SortOrder = Prisma.SortOrder.desc
   const orderBy: Prisma.PostOrderByWithAggregationInput = {[query.sort]: order};
 
-  console.log(query)
-
   if (query.userId) {
     where.userId = query.userId;
   }

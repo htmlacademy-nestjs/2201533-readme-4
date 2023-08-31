@@ -10,12 +10,12 @@ import {
   UseGuards,
   ValidationPipe
 } from '@nestjs/common';
-import {apiAuthHeader, FollowDto, unauthorized} from '@project/shared/shared-dto';
+import {FollowDto} from '@project/shared/shared-dto';
 import {FollowerService} from './follower.service';
 import {JwtAuthGuard, UserId} from '@project/shared/shared-mediators';
-import {NonFollowSelfGuard} from './non-follow-self.guard';
-import {ApiHeader, ApiResponse, ApiTags} from "@nestjs/swagger";
-// import {apiAuthHeader, unauthorized} from "@project/shared/shared-consts";
+import {SelfFollowGuard} from './self-follow.guard';
+import {ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {apiAuthHeader, unauthorized} from '@project/shared/shared-api-consts';
 
 @ApiTags('users')
 @Controller('follower')
@@ -26,7 +26,7 @@ export class FollowerController {
 
   @ApiResponse(unauthorized)
   @ApiHeader(apiAuthHeader)
-  @UseGuards(JwtAuthGuard, NonFollowSelfGuard)
+  @UseGuards(JwtAuthGuard, SelfFollowGuard)
   @Post('/')
   public async add(@UserId() follower: string, @Body(ValidationPipe) dto: FollowDto){
     return this.followerService.follow({...dto, follower});
@@ -37,12 +37,13 @@ export class FollowerController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('/:id')
-  public async delete(@UserId() follower: string, @Param('id', ValidationPipe) dto: FollowDto) {
-    await this.followerService.dontFollow({...dto, follower});
+  public async delete(@UserId() follower: string, @Param('id') dto: FollowDto) {
+    await this.followerService.unFollow({...dto, follower});
   }
 
   @Get('/:id')
-  public async count(@Param('id') followed: FollowDto) {
+  public async count(@Param('id') followed: string) {
+    console.log('FollowerController count ', followed);
     return this.followerService.count(followed);
   }
 }

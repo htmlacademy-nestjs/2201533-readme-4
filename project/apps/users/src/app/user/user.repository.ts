@@ -2,7 +2,7 @@ import {CRUDRepository} from '@project/util/util-types';
 import {UserEntity} from './user.entity';
 import {UserModel} from '@project/models/mongo-schemas';
 import {InjectModel} from '@nestjs/mongoose';
-import {UserType} from '@project/shared/shared-types';
+import {Counters, SortFieldsEnum, UserType} from '@project/shared/shared-types';
 import {Model} from 'mongoose';
 import {Logger} from '@nestjs/common';
 
@@ -31,5 +31,11 @@ export class UserRepository implements CRUDRepository<UserEntity, string, UserTy
     return this.userModel.findOne({email});
   }
 
+  public async changeCount(id: string, field: Counters, difference: number): Promise<number> {
+    const user = await this.userModel.findById(id);
+    user[Counters[field]] = user[Counters[field]] + difference;
+    user.save();
+    return user[Counters[field]];
+  }
 
 }

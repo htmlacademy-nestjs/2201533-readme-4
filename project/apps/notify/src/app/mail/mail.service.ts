@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {MailerService} from '@nestjs-modules/mailer';
 import {EmailPostInterface, Subscriber} from '@project/shared/shared-types';
-import {EMAIL_ADD_SUBSCRIBER_SUBJECT, EMAIL_NEW_POST} from '@project/shared/shared-consts';
+import {EmailSubjects} from '@project/shared/shared-consts';
 
 @Injectable()
 export class MailService {
@@ -12,7 +12,7 @@ export class MailService {
   public async sendNotifyNewSubscriber(subscriber: Subscriber) {
     await this.mailerService.sendMail({
       to: subscriber.email,
-      subject: EMAIL_ADD_SUBSCRIBER_SUBJECT,
+      subject: EmailSubjects.EMAIL_ADD_SUBSCRIBER,
       template: './add-subscriber',
       context: {
         user: `${subscriber.name}`,
@@ -25,7 +25,7 @@ export class MailService {
     function getMailOptions(subscriber: Subscriber) {
       return {
         to: subscriber.email,
-        subject: EMAIL_NEW_POST,
+        subject: EmailSubjects.EMAIL_NEW_POST,
         template: './new-post',
         context: {
           user: `${subscriber.name}`,

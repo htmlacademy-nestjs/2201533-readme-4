@@ -3,9 +3,9 @@ import {Expose} from 'class-transformer';
 import {ApiProperty} from "@nestjs/swagger";
 
 export class UpdatePhotoDto {
-  @IsUrl()
-  @Expose()
-  public path?: string;
+  // @IsUrl()
+  // @Expose()
+  // public path?: string;
 
   @Expose()
   @IsMongoId()
@@ -13,5 +13,5 @@ export class UpdatePhotoDto {
     description: 'photo id',
     example: '64eb54387dab4e4fe4744713',
   })
-  id: string
+  idPhoto: string
 }

@@ -39,6 +39,13 @@ export class FullUserRdo {
   public postsCount: number;
 
   @ApiProperty({
+    description: 'Count followers of user',
+    example: '34'
+  })
+  @Expose()
+  public followersCount: number;
+
+  @ApiProperty({
     description: 'Date of create user',
     example: '2023-08-24T15:52:54.820Z'
   })

@@ -46,7 +46,7 @@ CREATE TABLE "quotes" (
 -- CreateTable
 CREATE TABLE "photos" (
     "id" SERIAL NOT NULL,
-    "path" TEXT NOT NULL,
+    "id_photo" TEXT NOT NULL,
 
     CONSTRAINT "photos_pkey" PRIMARY KEY ("id")
 );

@@ -2,7 +2,7 @@
 
 ## Создать новый пост типа текст user: "torans@overlook.net"
 
-POST http://localhost:3222/posts/repost/13 HTTP/1.1
+POST http://localhost:3222/posts/repost/15 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
 Content-Type: text/plain
 

@@ -1,9 +1,19 @@
 import {CreateContentDto} from './content/create-content.dto';
-import {ArrayMaxSize, IsEnum, IsMongoId, MaxLength, MinLength, ValidateNested} from 'class-validator';
+import {
+  ArrayMaxSize,
+  IsBoolean,
+  IsEnum,
+  IsInt,
+  IsMongoId,
+  IsOptional,
+  MaxLength,
+  MinLength,
+  ValidateNested
+} from 'class-validator';
 import {Type} from '@project/shared/shared-types';
 import {postMax, postMin, validationMessage} from '@project/shared/shared-consts';
 import {IsTag} from '@project/util/util-core';
-import {Transform} from 'class-transformer';
+import {Expose, Transform} from 'class-transformer';
 import {transformTags} from '@project/util/util-core';
 import {ApiExtraModels, ApiProperty, getSchemaPath} from '@nestjs/swagger';
 import {CreateTextDto} from './content/create-text.dto';
@@ -15,6 +25,7 @@ import {CreateLinkDto} from "./content/create-link.dto";
 @ApiExtraModels(CreateTextDto, CreateQuoteDto, CreateVideoDto, CreatePhotoDto, CreateLinkDto)
 export class CreatePostDto {
   @IsMongoId()
+  @Expose()
   userId: string;
 
   @IsEnum(Type)
@@ -22,6 +33,7 @@ export class CreatePostDto {
     description: 'Type of post content',
     example: 'text',
   })
+  @Expose()
   type: string;
 
   @ValidateNested({message: validationMessage.badContent})
@@ -40,6 +52,7 @@ export class CreatePostDto {
       "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
     },
   })
+  @Expose()
   content: CreateContentDto;
 
   @ApiProperty({
@@ -58,6 +71,13 @@ export class CreatePostDto {
     each: true,
     message: validationMessage.tag
   })
-  @Transform((params)=> transformTags(params.value))
+  @Transform((params) => transformTags(params.value))
+  @Expose()
   tags: string[];
+
+  @Expose()
+  isRepost: boolean;
+
+  @Expose()
+  originalId: number;
 }

@@ -7,6 +7,8 @@ export class UserEntity implements UserType {
   public email: string;
   public name: string;
   public password: string;
+  public postsCount: number;
+  public followersCount: number;
 
   constructor(user: UserType) {
     this.fillEntity(user);
@@ -18,6 +20,8 @@ export class UserEntity implements UserType {
     this.email = user.email;
     this.name = user.name;
     this.password = user.password;
+    this.postsCount= user.postsCount;
+    this.followersCount = user.followersCount;
   }
 
   public toObject() {
@@ -26,6 +30,8 @@ export class UserEntity implements UserType {
       email: this.email,
       name: this.name,
       avatarId: this.avatarId,
+      postsCount: this.postsCount,
+      followersCount: this.followersCount
     };
   }
 
