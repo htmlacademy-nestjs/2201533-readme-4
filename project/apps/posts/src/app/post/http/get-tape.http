@@ -1,0 +1,22 @@
+# Posts
+
+## Получить ленту постов
+
+GET http://localhost:3222/posts/tape HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+
+###
+
+## Получить ленту постов
+
+GET http://localhost:3222/posts/tape?limit=2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+
+###
+
+## Получить черновики постов
+
+GET http://localhost:3222/posts/draft HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+
+###

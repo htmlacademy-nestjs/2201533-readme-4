@@ -1,0 +1,30 @@
+# Followers
+
+## Подписаться на пользователя
+
+POST http://localhost:3222/follower HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+Content-Type: application/json
+
+{
+  "followed": "64e0ec87d781487f0d6795d8"
+}
+
+###
+
+## Подписаться на пользователя
+
+POST http://localhost:3222/follower HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+Content-Type: application/json
+
+{
+  "followed": "64e0ec87d781487f0d6795db"
+}
+
+###
+
+DELETE http://localhost:3222/follower/64dc996e2c74082fbc7b70cd HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+
+###

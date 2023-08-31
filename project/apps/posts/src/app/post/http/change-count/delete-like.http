@@ -1,0 +1,7 @@
+# Posts
+
+## Удалить лайк
+
+DELETE http://localhost:3000/posts/26/like HTTP/1.1
+
+###

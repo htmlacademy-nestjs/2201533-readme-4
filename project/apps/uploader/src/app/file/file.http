@@ -1,0 +1,16 @@
+# Upload some file
+POST http://localhost:3444/file/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="file.http"
+
+< ./file.http
+
+
+###
+
+# Get file by ID
+GET http://localhost:3444/file/64df6bf19742300295228bd9 HTTP/1.1
+
+###

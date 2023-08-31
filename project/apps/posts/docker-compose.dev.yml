@@ -1,0 +1,43 @@
+version: '3.5'
+services:
+  readme.posts.postgres:
+    image: postgres:14-alpine
+    container_name: readme.posts.postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: readme-posts
+      POSTGRES_EXTENSIONS: pg_trgm
+    ports:
+      - 5433:5432
+    volumes:
+      - readme.postgres.posts:/var/lib/postgresql/data
+      - ./db-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d readme-posts" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    networks:
+      - readme.posts
+
+  readme.posts.pgadmin:
+    image: dpage/pgadmin4
+    container_name: readme.posts.pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "89179699365@mail.ru"
+      PGADMIN_DEFAULT_PASSWORD: "test"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - 8082:80
+    networks:
+      - readme.posts
+
+volumes:
+  readme.postgres.posts:
+
+networks:
+  readme.posts:
+      driver: bridge

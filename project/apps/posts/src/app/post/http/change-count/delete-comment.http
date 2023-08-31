@@ -1,0 +1,8 @@
+# Posts
+
+## Удалить комментарий
+
+DELETE http://localhost:3000/posts/26/comment HTTP/1.1
+
+###
+

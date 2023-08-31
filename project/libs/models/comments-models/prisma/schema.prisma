@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/@prisma/client/comments"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comments {
+  id         Int      @id @default(autoincrement())
+  text       String
+  idPost     Int
+  createDate DateTime @default(now()) @map("create_date")
+  authorId   String
+
+  @@map("comments")
+}
+
+model Likes {
+  idPost Int
+  idUser String
+
+  @@id([idPost, idUser])
+  @@map("likes")
+}

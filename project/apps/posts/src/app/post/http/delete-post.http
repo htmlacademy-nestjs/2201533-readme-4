@@ -1,0 +1,7 @@
+# Posts
+
+## Удалить пост
+
+DELETE http://localhost:3000/posts/6 HTTP/1.1
+
+###

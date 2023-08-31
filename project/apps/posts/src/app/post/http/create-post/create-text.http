@@ -1,0 +1,231 @@
+# Posts
+
+## Создать новый пост типа текст user: "torans@overlook.net"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTc1MTMwLCJleHAiOjE2OTU1NjcxMzB9.Q3sxPFQR1nBRnrbFpe_NHMZCRLVz83XCGcIW_feV6HQ
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "лес валю torans@overlook.net",
+    "announcement": "дровосек в зимнем лесу должен, должен torans@overlook.net",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "tags": [
+    "зима",
+    "лес",
+    "холод",
+    "дрова"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "torans@overlook.net"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTc1MTMwLCJleHAiOjE2OTU1NjcxMzB9.Q3sxPFQR1nBRnrbFpe_NHMZCRLVz83XCGcIW_feV6HQ
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге torans@overlook.net",
+    "announcement": "песнь степного коневодителя, и этот пост тоже должен torans@overlook.net",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик. И текст этого поста тоже должен."
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "snow@pisem.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM5OTZlMmM3NDA4MmZiYzdiNzBjZCIsImVtYWlsIjoic25vd0BwaXNlbS5sb2NhbCIsIm5hbWUiOiJCb2IiLCJpYXQiOjE2OTI1MTk4NTksImV4cCI6MTY5NTExMTg1OX0.wvXtCxwbjYugClkZl7zsw_SLhcqaANRD7kv8h-N2iCg
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "лес валю snow@pisem.local",
+    "announcement": "дровосек в зимнем лесу, добьём до пятидесяти snow@pisem.local",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "tags": [
+    "зима",
+    "лес",
+    "холод",
+    "дрова"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "snow@pisem.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM5OTZlMmM3NDA4MmZiYzdiNzBjZCIsImVtYWlsIjoic25vd0BwaXNlbS5sb2NhbCIsIm5hbWUiOiJCb2IiLCJpYXQiOjE2OTI1MTk4NTksImV4cCI6MTY5NTExMTg1OX0.wvXtCxwbjYugClkZl7zsw_SLhcqaANRD7kv8h-N2iCg
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге snow@pisem.local",
+    "announcement": "песнь степного коневодителя, этот тоже добьём snow@pisem.local",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик. Ещё и текст короткий, надо ж так"
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "president@dka.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTBlYzg3ZDc4MTQ4N2YwZDY3OTVkOCIsImVtYWlsIjoicHJlc2lkZW50QGRrYS5sb2NhbCIsIm5hbWUiOiLQmNCy0LDQvSDQmNCy0LDQvdC-0LIiLCJpYXQiOjE2OTI1MzM4OTIsImV4cCI6MTY5NTEyNTg5Mn0.tUfww68i-DNKiYH9VlBJB6QLx_K50AX1IWajYpKNicY
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "лес валю president@dka.local",
+    "announcement": "дровосек в зимнем лесу, добьём до пятидесяти president@dka.local",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "tags": [
+    "зима",
+    "лес",
+    "холод",
+    "дрова"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "president@dka.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTBlYzg3ZDc4MTQ4N2YwZDY3OTVkOCIsImVtYWlsIjoicHJlc2lkZW50QGRrYS5sb2NhbCIsIm5hbWUiOiLQmNCy0LDQvSDQmNCy0LDQvdC-0LIiLCJpYXQiOjE2OTI1MzM4OTIsImV4cCI6MTY5NTEyNTg5Mn0.tUfww68i-DNKiYH9VlBJB6QLx_K50AX1IWajYpKNicY
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге snow@pisem.local",
+    "announcement": "песнь степного коневодителя, этот тоже добьём president@dka.local",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик. Ещё и текст короткий, надо ж так"
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "fish@big.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTBlYzg3ZDc4MTQ4N2YwZDY3OTVkYiIsImVtYWlsIjoiZmlzaEBiaWcubG9jYWwiLCJuYW1lIjoi0J7Qu9C10LMg0KHQuNC00L7RgNC-0LIiLCJpYXQiOjE2OTI1MzQxNTcsImV4cCI6MTY5NTEyNjE1N30.xyCaJkEc4MEnJWMaTmN-UBZ1CW1maC4c78Qmo2BuHow
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "лес валю fish@big.local",
+    "announcement": "дровосек в зимнем лесу, добьём до пятидесяти president@dka.local",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "tags": [
+    "зима",
+    "лес",
+    "холод",
+    "дрова"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "fish@big.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTBlYzg3ZDc4MTQ4N2YwZDY3OTVkYiIsImVtYWlsIjoiZmlzaEBiaWcubG9jYWwiLCJuYW1lIjoi0J7Qu9C10LMg0KHQuNC00L7RgNC-0LIiLCJpYXQiOjE2OTI1MzQxNTcsImV4cCI6MTY5NTEyNjE1N30.xyCaJkEc4MEnJWMaTmN-UBZ1CW1maC4c78Qmo2BuHow
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге fish@big.local",
+    "announcement": "песнь степного коневодителя, этот тоже добьём fish@big.local",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик. Ещё и текст короткий, надо ж так"
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "test@pisem.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTBlYzg3ZDc4MTQ4N2YwZDY3OTVkZSIsImVtYWlsIjoidGVzdEBwaXNlbS5sb2NhbCIsIm5hbWUiOiLQn9GM0LXRgCDQkdC10LfRg9GF0L7QsiIsImlhdCI6MTY5MjUzNDM2OCwiZXhwIjoxNjk1MTI2MzY4fQ.78jGhbVyyTNw_Cc_UaRlnMtD7vaPiI_lNAlmjjT-CAM
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "лес валю test@pisem.local",
+    "announcement": "дровосек в зимнем лесу, добьём до пятидесяти test@pisem.local",
+    "text": "Однажды, в студёную зимнюю пору, я из лесу вышел, и снова зашёл. Влез, неспеша, в чью-то тёплую нору..."
+  },
+  "tags": [
+    "зима",
+    "лес",
+    "холод",
+    "дрова"
+  ]
+}
+
+###
+
+## Создать новый пост типа текст user: "fish@big.local"
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTBlYzg3ZDc4MTQ4N2YwZDY3OTVkZSIsImVtYWlsIjoidGVzdEBwaXNlbS5sb2NhbCIsIm5hbWUiOiLQn9GM0LXRgCDQkdC10LfRg9GF0L7QsiIsImlhdCI6MTY5MjUzNDM2OCwiZXhwIjoxNjk1MTI2MzY4fQ.78jGhbVyyTNw_Cc_UaRlnMtD7vaPiI_lNAlmjjT-CAM
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "еду на коняге test@pisem.local",
+    "announcement": "песнь степного коневодителя, этот тоже добьём test@pisem.local",
+    "text": "Степь да степь кругом, путь далёк лежит, в той степи глухой замерзал ямщик. Ещё и текст короткий, надо ж так"
+  },
+  "tags": [
+    "зима",
+    "степь",
+    "холод",
+    "конь"
+  ]
+}
+
+###

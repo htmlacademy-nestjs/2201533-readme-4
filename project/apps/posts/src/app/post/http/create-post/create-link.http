@@ -1,0 +1,44 @@
+# Posts
+
+## Создать новый пост типа ссылка
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+Content-Type: application/json
+
+{
+  "type": "link",
+  "content": {
+    "description": "Однажды, в студёную зимнюю пору...",
+    "url": "https://stihi.ru/2021/10/21/5788"
+  },
+  "tags": [
+    "некрасов",
+    "дети",
+    "холод",
+    "дрова",
+    "барышев"
+  ]
+}
+
+###
+
+## Создать новый пост типа ссылка
+
+POST http://localhost:3222/posts/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyNTEyNzEwLCJleHAiOjE2OTUxMDQ3MTB9.rJGqGaewaNjI0PMAuYY4uK6BatsJ2ydAws29acQ1JQs
+Content-Type: application/json
+
+{
+  "type": "link",
+  "content": {
+    "description": "Степь, да степь кругом...",
+    "url": "https://stihi.ru/2015/09/09/8059"
+  },
+  "tags": [
+    "суриков",
+    "абельманс",
+    "холод",
+    "конь"
+  ]
+}

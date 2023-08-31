@@ -1,0 +1,9 @@
+# Posts
+
+## Добавить лайк
+
+POST http://localhost:3000/posts/26/like HTTP/1.1
+Content-Type: text/plain
+
+""
+###
