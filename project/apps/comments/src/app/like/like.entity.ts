@@ -1,5 +1,5 @@
-import {Entity} from "@project/util/util-types";
-import {Like} from "@project/shared/shared-types";
+import {Entity} from '@project/util/util-types';
+import {Like} from '@project/shared/shared-types';
 
 export class LikeEntity implements Entity<LikeEntity>, Like {
   idPost: number;

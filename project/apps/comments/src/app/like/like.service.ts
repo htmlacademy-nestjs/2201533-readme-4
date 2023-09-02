@@ -10,6 +10,10 @@ export class LikeService {
   ) {}
 
   async create(item: Like): Promise<Like> {
+    const foundLike = await this.likeRepository.find(new LikeEntity(item));
+    if (foundLike) {
+      return foundLike;
+    }
     return this.likeRepository.create(new LikeEntity(item));
   }
 

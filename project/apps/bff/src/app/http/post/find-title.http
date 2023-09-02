@@ -1,7 +1,0 @@
-# Posts
-
-## Найти по титлу
-
-GET http://localhost:4444/posts/find?title=лес валю HTTP/1.1
-
-###

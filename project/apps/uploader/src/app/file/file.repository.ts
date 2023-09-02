@@ -13,12 +13,12 @@ export class FileRepository {
 
   public async create(item: FileEntity): Promise<File> {
     const file = new this.fileModel(item);
-    return file.save();
+    return await file.save();
   }
 
   public async findById(id: string): Promise<File | null> {
-    return this.fileModel
-      .findOne({ _id: id})
+    return await this.fileModel
+      .findOne({_id: id})
       .exec();
   }
 }

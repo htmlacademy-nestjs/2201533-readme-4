@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {TagRepository} from './tag.repoditory';
+import {TagRepository} from './tag.repository';
 import {CreateTagDto} from './dto/create-tag.dto';
 import {Tag} from '@project/shared/shared-types';
 import {TagEntity} from './tag.entity';

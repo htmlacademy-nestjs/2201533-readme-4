@@ -1,0 +1,7 @@
+# Posts
+
+## Получить пост по идентификатору
+
+GET http://localhost:4444/posts/4 HTTP/1.1
+
+###

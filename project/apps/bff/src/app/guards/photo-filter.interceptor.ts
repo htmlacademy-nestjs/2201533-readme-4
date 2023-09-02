@@ -1,9 +1,9 @@
-import {CallHandler, ExecutionContext, Inject, Injectable, NestInterceptor} from "@nestjs/common";
-import {map, Observable, tap} from "rxjs";
+import {CallHandler, ExecutionContext, Injectable, NestInterceptor} from "@nestjs/common";
+import {Observable} from "rxjs";
 import {MAX_SIZE_PHOTO, signatures} from "@project/shared/shared-consts";
 import {BigSizeFileException} from "@project/util/util-core";
 import {FileWrongSystemException} from "@project/util/util-core";
-import {FilesController} from "./files.controller";
+import {FilesController} from "../files.controller";
 
 
 @Injectable()
@@ -24,18 +24,9 @@ export class PhotoFilter implements NestInterceptor{
       }
       const image = await this.fileController.upload(req.file);
       const dto = JSON.parse(req.body.post);
-      req.body = {...dto, content: {...dto.content, path: image.path, id: image.id}};
+      req.body = {...dto, content: {...dto.content, idPhoto: image.id}};
     }
 
-    return next.handle()
-    .pipe(
-        map((data)=>{
-
-          // console.log('post controller');
-          if (req.headers['content-type'].startsWith('multipart/form-data')) {
-            console.log(data);
-          }
-        })
-      );
+    return next.handle();
   }
 }

@@ -4,11 +4,10 @@ import {ConfigType} from '@nestjs/config'
 import {ensureDir} from 'fs-extra'
 import { writeFile } from 'node:fs/promises';
 import dayjs from 'dayjs';
-import {extension} from 'mime-types';
 import {FileRepository} from './file.repository';
 import {FileEntity} from './file.entity';
 import * as crypto from 'node:crypto';
-import {EXTENSIONS} from '@project/shared/shared-consts';
+import {Extensions} from '@project/shared/shared-consts';
 
 type WritenFile = {
   hashName: string;
@@ -24,14 +23,14 @@ export class FileService {
     private readonly applicationConfig: ConfigType<typeof uploaderConfig>,
     private readonly fileRepository: FileRepository
   ) {}
-  public async writeFile(file: Express.Multer.File): Promise<WritenFile> {
+  private async writeFile(file: Express.Multer.File): Promise<WritenFile> {
     const [ year, month , day] = dayjs().format('YYYY MM DD').split(' ');
     const { uploadDirectory } = this.applicationConfig;
     const subDirectory = `${year}/${month}/$${day}`;
     const uploadDirectoryPath = `${uploadDirectory}/${subDirectory}`;
 
     const uuid = crypto.randomUUID();
-    const fileExtension = EXTENSIONS[file.buffer[0].toString(16)];
+    const fileExtension = Extensions[file.buffer[0]];
     const hashName = `${uuid}.${fileExtension}`;
     const destinationFile = `${uploadDirectoryPath}/${hashName}`;
 
@@ -55,17 +54,16 @@ export class FileService {
       originalName: file.originalname,
       path: writenFile.path,
     });
-
     return this.fileRepository.create(newFile);
   }
 
   public async getFile(fileId: string) {
-    const existFile = await this.fileRepository.findById(fileId);
+    const foundFile = await this.fileRepository.findById(fileId);
 
-    if (!existFile) {
+    if (!foundFile) {
       throw new NotFoundException(`File with ${fileId} not found.`);
     }
 
-    return existFile;
+    return foundFile;
   }
 }

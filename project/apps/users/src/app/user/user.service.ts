@@ -1,11 +1,11 @@
 import {ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import {ConfigType} from '@nestjs/config';
-import {UserType} from '@project/shared/shared-types';
+import {Counters, UserType} from '@project/shared/shared-types';
 import {UserRepository} from './user.repository';
-import {USER_EXISTS, USER_NOT_FOUND, USER_PASSWORD_WRONG} from '@project/shared/shared-consts';
+import {UserExceptionMessages} from '@project/shared/shared-consts';
 import {UserEntity} from './user.entity';
 import {LoginUserDto} from './dto/login-user.dto';
-import {CreateUserDto} from '@project/shared/shared-dto';
+import {CreateUserDto, UpdateUserDto} from '@project/shared/shared-dto';
 import {JwtService} from '@nestjs/jwt';
 import {RefreshTokenService} from "../refresh-token/refresh-token.service";
 import {createJWTPayload, jwtUsersConfig} from '@project/util/util-core';
@@ -30,7 +30,7 @@ export class UserService {
     const existedUser = await this.userRepository.findByEmail(email);
 
     if (existedUser) {
-      throw new ConflictException(USER_EXISTS);
+      throw new ConflictException(UserExceptionMessages.USER_EXISTS);
     }
 
     const userEntity = await new UserEntity(user)
@@ -38,9 +38,9 @@ export class UserService {
     return this.userRepository.create(userEntity);
   }
 
-  public async setPassword(id: string, pass: string): Promise<UserType> {
-    const userEntity = await new UserEntity({password: pass})
-      .setPassword(pass)
+  public async setPassword(id: string, password: string): Promise<UserType> {
+    const userEntity = await new UserEntity({password: password})
+      .setPassword(password)
     return this.userRepository.update( id, userEntity)
   }
 
@@ -49,12 +49,12 @@ export class UserService {
     const existedUser = await this.userRepository.findByEmail(email);
 
     if (!existedUser) {
-      throw new NotFoundException(USER_NOT_FOUND);
+      throw new NotFoundException(UserExceptionMessages.USER_NOT_FOUND);
     }
 
     const userEntity = new UserEntity(existedUser);
     if (!await userEntity.comparePassword(password)) {
-      throw new UnauthorizedException(USER_PASSWORD_WRONG);
+      throw new UnauthorizedException(UserExceptionMessages.USER_PASSWORD_WRONG);
     }
 
     return userEntity.toObject();
@@ -76,6 +76,14 @@ export class UserService {
         expiresIn: this.jwtOptions.refreshTokenExpiresIn
       })
     }
+  }
+
+  public async changeCount(id: string, field: Counters, difference: number) {
+    return this.userRepository.changeCount(id, field, difference);
+  }
+
+  public async update(id: string, dto: UpdateUserDto) {
+    return this.userRepository.update(id, new UserEntity(dto));
   }
 }
 

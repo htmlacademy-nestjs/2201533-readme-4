@@ -33,4 +33,9 @@ export class CommentService {
   async deleteByPost(idPost: number) {
     await this.commentRepository.deleteByPost(idPost);
   }
+
+  async checkComment(id: number): Promise<boolean> {
+    const comment = await this.commentRepository.findById(id);
+    return comment !== null;
+  }
 }

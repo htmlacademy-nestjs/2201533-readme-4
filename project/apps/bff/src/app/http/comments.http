@@ -1,0 +1,40 @@
+# Comments
+
+## Создать комментарий
+
+POST http://localhost:4444/comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM1NTg3YzYyOTkwOGNhMTQwYTE2NiIsImVtYWlsIjoidG9yYW5zQG92ZXJsb29rLm5ldCIsIm5hbWUiOiJKYWNrIiwiaWF0IjoxNjkyOTQ0NDM4LCJleHAiOjE2OTU1MzY0Mzh9.lgMPgUsqP1lle0TVciBcbZHdAH4kNHYDJZI-JFlq4MY
+Content-Type: application/json
+
+{
+  "idPost": "5",
+  "text": "Это минимальный комментарий"
+}
+
+###
+
+## Создать комментарий
+
+POST http://localhost:4444/comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM5OTZlMmM3NDA4MmZiYzdiNzBjZCIsImVtYWlsIjoic25vd0BwaXNlbS5sb2NhbCIsIm5hbWUiOiJCb2IiLCJpYXQiOjE2OTMzMTIwOTcsImV4cCI6MTY5NTkwNDA5N30.l0U5PE9RR4h1D_z-IDn96v3X-ADxpms_8gkRqJhg1lo
+Content-Type: application/json
+
+{
+  "idPost": "2",
+  "text": "Это другой комментарий"
+}
+
+###
+
+## Удалить комментарий
+
+DELETE http://localhost:4444/comments/29 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGM5OTZlMmM3NDA4MmZiYzdiNzBjZCIsImVtYWlsIjoic25vd0BwaXNlbS5sb2NhbCIsIm5hbWUiOiJCb2IiLCJpYXQiOjE2OTMzMTIwOTcsImV4cCI6MTY5NTkwNDA5N30.l0U5PE9RR4h1D_z-IDn96v3X-ADxpms_8gkRqJhg1lo
+
+###
+
+## Получить комментарии
+
+GET http://localhost:4444/comments/7 HTTP/1.1
+
+###

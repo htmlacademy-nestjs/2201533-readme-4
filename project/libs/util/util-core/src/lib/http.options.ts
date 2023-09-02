@@ -5,7 +5,7 @@ export function getHttpOptions(optionSpace: string) {
     useFactory: async (configService: ConfigService) => {
       return {
         timeout: configService.get<number>(`${optionSpace}.timeout`),
-        maxRedirects: configService.get<number>(`${optionSpace}.maxRedirect`),
+        maxRedirectsCount: configService.get<number>(`${optionSpace}.maxRedirectCount`),
       }
     },
     inject: [ConfigService],

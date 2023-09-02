@@ -4,14 +4,14 @@ import {instanceToPlain} from "class-transformer";
 
 export class PhotoEntity implements Entity<PhotoEntity>, Photo {
   public id: number;
-  public path: string;
+  public idPhoto: string;
 
   constructor(photo: Photo) {
     this.fillEntity(photo)
   }
 
   fillEntity(entity: Photo) {
-    this.path = entity.path;
+    this.idPhoto = entity.idPhoto;
   }
 
   toObject(): PhotoEntity {

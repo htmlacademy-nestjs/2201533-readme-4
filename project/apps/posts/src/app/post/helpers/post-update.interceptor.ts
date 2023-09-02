@@ -1,7 +1,7 @@
 import {CallHandler, ExecutionContext, Injectable, NestInterceptor} from '@nestjs/common';
 import {Observable, tap} from 'rxjs';
 import {PostService} from '../post.service';
-import {fillUpdateDto} from '../../../../../../libs/shared/shared-dto/src/lib/posts/content/update-content.dto';
+import {fillUpdateDto} from '@project/shared/shared-dto';
 import {Type} from '@project/shared/shared-types';
 import {TagService} from '../../tag/tag.service';
 
@@ -25,7 +25,7 @@ export class PostUpdateInterceptor implements NestInterceptor {
     return next
       .handle()
       .pipe(
-        tap(()=>{
+        tap(()=> {
           if (tags.length) {
             this.tagService.clearTags(tags);
           }

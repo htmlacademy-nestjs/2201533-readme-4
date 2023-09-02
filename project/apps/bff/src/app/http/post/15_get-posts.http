@@ -1,0 +1,7 @@
+# Posts
+
+## Получить список постов
+
+GET http://localhost:4444/posts HTTP/1.1
+
+###

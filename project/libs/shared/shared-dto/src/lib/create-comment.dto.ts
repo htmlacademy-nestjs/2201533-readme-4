@@ -5,8 +5,8 @@ import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateCommentDto {
   @IsString()
-  @MinLength(commentMin.comment)
-  @MaxLength(commentMax.comment)
+  @MinLength(commentMin.commentLength)
+  @MaxLength(commentMax.commentLength)
   @ApiProperty({
     description: '',
     example: '',

@@ -1,15 +1,14 @@
 import {Injectable} from '@nestjs/common';
 import {PostRepository} from './post.repository';
-import {TagRepository} from '../tag/tag.repoditory';
+import {TagRepository} from '../tag/tag.repository';
 import {CreatePostDto} from '@project/shared/shared-dto';
-import {Post, SortFieldsEnum, Type} from '@project/shared/shared-types';
+import {Counters, Post, Type} from '@project/shared/shared-types';
 import {PostEntity} from './post.entity';
 import {UpdatePostDto} from '@project/shared/shared-dto';
 import {ContentRepository} from '../content/content.repository';
-import {ContentEntities} from '../content/content.entity';
+import {mapPostTypeToCreator} from '../content/content.entity';
 import {PrismaService} from '../prisma/prisma.service';
 import {PostFilter, GetPostsFilter} from './helpers/posts-filter.interface';
-import {now} from 'mongoose';
 
 @Injectable()
 export class PostService {
@@ -26,7 +25,7 @@ export class PostService {
     async function createPost(service: PostService) {
       return service.prisma.$transaction(async (tx: PrismaService) => {
         const tags = await service.tagRepository.findOrCreate(dto.tags);
-        const contentEntity = ContentEntities[Type[type]](dto.content);
+        const contentEntity = mapPostTypeToCreator[Type[type]](dto.content);
         const content = await service.contentRepository.create(contentEntity, type, tx);
         const postEntity = new PostEntity({
           ...dto,
@@ -52,7 +51,7 @@ export class PostService {
         const content = dto.content ?
           await service.contentRepository.update(
             dto.contentId,
-            ContentEntities[Type[dto.type]](dto.content),
+            mapPostTypeToCreator[Type[dto.type]](dto.content),
             dto.type,
             tx
           ) :
@@ -99,19 +98,17 @@ export class PostService {
     const type = post.type;
     const contentId = post.contentId;
     async function deletePost(service: PostService){
-      return service.prisma.$transaction(async () => {
+      return service.prisma.$transaction(async (tx: PrismaService) => {
 
-        await service.contentRepository.delete(contentId, type);
-        await service.postRepository.delete(id);
+        await service.contentRepository.delete(contentId, type, tx);
+        await service.postRepository.delete(id, tx);
       })
     }
     await deletePost(this);
   }
 
-  async changeCount(id: number,field: SortFieldsEnum, difference: number) {
-    const post = await this.postRepository.changeCount(id, field, difference);
-    const content = await this.contentRepository.findById(post.contentId, post.type);
-    return {...post, content: content};
+  async changeCount(id: number, field: Counters, difference: number) {
+    return this.postRepository.changeCount(id, field, difference);
   }
 
   async checkUser(postId: number, userId: string): Promise<boolean> {
@@ -120,35 +117,30 @@ export class PostService {
   }
 
   async getDrafts(userId: string): Promise<Post[]> {
-    return this.postRepository.getDrafts(userId);
+    const posts =  await this.postRepository.getDrafts(userId);
+    const promises = posts.map((post) => this.stickContent(post));
+    return await Promise.all(promises);
+
   }
 
   async setPublished(id: number, published: boolean): Promise<Post> {
-    return this.postRepository.setPublished(id, published);
+    const post = await this.postRepository.setPublished(id, published);
+    return this.stickContent(post);
   }
 
   async getTape(follower: string, filters: PostFilter): Promise<Post[]> {
-    return this.postRepository.getTape(follower, filters);
+    const posts = await this.postRepository.getTape(follower, filters);
+    const promises = posts.map((post) => this.stickContent(post));
+    return await Promise.all(promises);
   }
 
-  async repost(idUser: string, idPost: number) {
+  async existsRepost(idUser: string, idPost: number): Promise<boolean> {
     const repost = await this.postRepository.findRepost(idUser, idPost);
-    if (repost) {
-      return this.stickContent(repost);
-    }
-    const original = await this.postRepository.findById(idPost);
+    return repost !== null;
+  }
 
-    const post = await this.postRepository.create(new PostEntity({
-      ...original,
-      commentCount: 0,
-      createDate: now(),
-      isPublished: true,
-      isRepost: true,
-      likeCount: 0,
-      originalId: idPost,
-      pubDate: now(),
-      userId: idUser
-    }));
-    return this.stickContent(post)
+  async checkPost(id: number): Promise<boolean> {
+    const post = await this.postRepository.findOrNull(id);
+    return post !== null;
   }
 }
