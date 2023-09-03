@@ -8,8 +8,9 @@ import {LoginUserDto} from './dto/login-user.dto';
 import {CreateUserDto, UpdateUserDto} from '@project/shared/shared-dto';
 import {JwtService} from '@nestjs/jwt';
 import {RefreshTokenService} from "../refresh-token/refresh-token.service";
-import {createJWTPayload, jwtUsersConfig} from '@project/util/util-core';
+import {createJWTPayload} from '@project/util/util-core';
 import * as crypto from 'node:crypto';
+import {jwtUsersConfig} from '@project/config/config-modules';
 
 @Injectable()
 export class UserService {
@@ -84,6 +85,11 @@ export class UserService {
 
   public async update(id: string, dto: UpdateUserDto) {
     return this.userRepository.update(id, new UserEntity(dto));
+  }
+
+  public async isExist(id: string) {
+    const foundUser = await this.userRepository.findById(id);
+    return foundUser !== null;
   }
 }
 

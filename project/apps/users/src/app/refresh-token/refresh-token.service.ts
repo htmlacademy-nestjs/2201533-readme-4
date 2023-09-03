@@ -1,10 +1,11 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {RefreshTokenRepository} from './refresh-token.repository';
-import {jwtUsersConfig, parseTime} from '@project/util/util-core';
+import {parseTime} from '@project/util/util-core';
 import {ConfigType} from '@nestjs/config';
 import {RefreshTokenPayload} from '@project/shared/shared-types';
 import {RefreshTokenEntity} from './refresh-token.entity';
 import dayjs from 'dayjs';
+import {jwtUsersConfig} from '@project/config/config-modules';
 
 @Injectable()
 export class RefreshTokenService {

@@ -101,22 +101,27 @@ export class UserController {
   @Post('/post')
   @UseGuards(JwtAuthGuard)
   async addPost(@UserId() id: string) {
-    return this.userService.changeCount(id, Counters.postsCount, Difference.up);
+    return this.userService.changeCount(id, Counters.postsCount, Difference.add);
   }
 
   @Delete('/post')
   @UseGuards(JwtAuthGuard)
   async subPost(@UserId() id: string) {
-    return this.userService.changeCount(id, Counters.postsCount, Difference.down);
+    return this.userService.changeCount(id, Counters.postsCount, Difference.sub);
   }
 
   @Post('/:id/follower')
   async addFollower(@Param('id') id: string) {
-    return this.userService.changeCount(id, Counters.followersCount, Difference.up);
+    return this.userService.changeCount(id, Counters.followersCount, Difference.add);
   }
 
   @Delete('/:id/follower')
   async subFollower(@Param('id') id: string) {
-    return this.userService.changeCount(id, Counters.followersCount, Difference.down);
+    return this.userService.changeCount(id, Counters.followersCount, Difference.sub);
+  }
+
+  @Get('/exists/:id')
+  async isExist(@Param('id') id: string){
+    return this.userService.isExist(id);
   }
 }

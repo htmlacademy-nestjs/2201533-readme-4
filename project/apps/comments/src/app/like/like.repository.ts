@@ -14,9 +14,10 @@ export class LikeRepository{
     })
   }
 
-  async delete(item: LikeEntity): Promise<void> {
+  async delete(item: LikeEntity) {
     const queryString = `DELETE FROM likes WHERE "idPost"=${item.idPost} AND "idUser"='${item.idUser}'`;
-    await this.prisma.$executeRawUnsafe(queryString)
+    await this.prisma.$executeRawUnsafe(queryString);
+    return {...item};
   }
 
   async find(item: LikeEntity): Promise<Like | null> {

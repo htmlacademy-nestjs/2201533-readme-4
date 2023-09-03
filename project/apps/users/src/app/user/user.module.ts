@@ -6,12 +6,13 @@ import {MongooseModule} from "@nestjs/mongoose";
 import {UserModel, UserSchema} from '@project/models/mongo-schemas';
 import {JwtModule} from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { getJwtOptions } from '@project/config/config-users';
+import { getJwtOptions } from '@project/shared/modules-options';
 import {NotifyModule} from '../notify/notify.module';
 import {JwtAccessStrategy} from '@project/util/util-core';
 import {LocalStrategy} from './strategies/local.strategy';
 import {RefreshTokenModule} from '../refresh-token/refresh-token.module';
-import {JwtRefreshStrategy} from "./strategies/jwt-refresh.strategy";
+import {JwtRefreshStrategy} from './strategies/jwt-refresh.strategy';
+import {CounterController} from './counter.controller';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import {JwtRefreshStrategy} from "./strategies/jwt-refresh.strategy";
     JwtRefreshStrategy,
     LocalStrategy
   ],
-  controllers: [UserController],
+  controllers: [UserController, CounterController],
   exports: [UserRepository]
 })
 export class UserModule {}

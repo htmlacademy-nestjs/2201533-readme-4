@@ -1,6 +1,6 @@
 import {Controller, Inject} from '@nestjs/common';
 import {HttpService} from '@nestjs/axios';
-import {appsConfig} from '@project/util/util-core';
+import {appsConfig} from '@project/config/config-modules';
 import {ConfigType} from '@nestjs/config';
 import {UploadedFileRdo} from '@project/shared/shared-dto';
 import {ApiTags} from "@nestjs/swagger";

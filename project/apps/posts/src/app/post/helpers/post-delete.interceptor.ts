@@ -17,11 +17,11 @@ export class PostDeleteInterceptor implements NestInterceptor {
     return next
       .handle()
       .pipe(
-        tap(()=>{
+        tap(() => {
           if (tags.length) {
             this.tagService.clearTags(tags);
           }
         })
-      );
-  }
+      )
+   }
 }

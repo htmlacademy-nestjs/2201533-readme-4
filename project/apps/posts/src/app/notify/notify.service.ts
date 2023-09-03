@@ -1,10 +1,9 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {AmqpConnection} from '@golevelup/nestjs-rabbitmq';
-import {rabbitConfig} from '@project/util/util-core';
 import {ConfigType} from '@nestjs/config';
 import {EmailPostRdo} from '../post/rdo/email-post.rdo';
-import {RabbitRouting} from '@project/shared/shared-types';
-
+import {RabbitRoutingKeys} from '@project/shared/modules-options';
+import {rabbitConfig} from '@project/config/config-modules';
 
 @Injectable()
 export class NotifyService {
@@ -16,8 +15,8 @@ export class NotifyService {
 
   public async sendNewPost(rdo: EmailPostRdo) {
     return this.rabbitClient.publish<EmailPostRdo>(
-      this.rabbitOptions.exchange,
-      RabbitRouting.SendNewsPost,
+      this.rabbitOptions.bindings[RabbitRoutingKeys.SendNewsPost].exchange,
+      this.rabbitOptions.bindings[RabbitRoutingKeys.SendNewsPost].binding,
       {...rdo}
     )
   }

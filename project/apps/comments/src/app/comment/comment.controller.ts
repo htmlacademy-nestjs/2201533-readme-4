@@ -48,8 +48,8 @@ export class CommentController {
   @ApiHeader(apiAuthHeader)
   @UseGuards(JwtAuthGuard, CommentAuthor)
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@UserId() user: string, @Param('id', ParseIntPipe) id: number) {
-    await this.commentService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.commentService.delete(id);
   }
 
   @Get('/:id')

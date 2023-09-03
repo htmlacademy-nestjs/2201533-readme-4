@@ -1,12 +1,14 @@
 import {Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, UseFilters, UseGuards} from '@nestjs/common';
 import {HttpService} from '@nestjs/axios';
-import {appsConfig} from '@project/util/util-core';
+import {appsConfig} from '@project/config/config-modules';
 import {ConfigType} from '@nestjs/config';
 import {Token} from '@project/shared/shared-mediators';
 import {ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {apiAuthHeader, authHeader, created, unauthorized} from '@project/shared/shared-api-consts';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
 import {NotExistPost} from "./guards/not-exist-post.guard";
+import {Difference} from "@project/util/util-types";
+import {RabbitService} from "./services/rabbit.service";
 
 @ApiTags('likes')
 @Controller('likes')
@@ -15,6 +17,7 @@ export class LikesController {
   constructor(
     private readonly httpService: HttpService,
     @Inject (appsConfig.KEY) private readonly config: ConfigType<typeof appsConfig>,
+    private readonly notifyService: RabbitService
   ) {}
 
   private postUrl = this.config.posts;
@@ -27,7 +30,7 @@ export class LikesController {
   @UseGuards(NotExistPost)
   async create(@Token() token: string, @Param('id', ParseIntPipe) idPost: number) {
     await this.httpService.axiosRef.post(`${this.likeUrl}/${idPost}`, '', authHeader(token));
-    await this.httpService.axiosRef.post(`${this.postUrl}/${idPost}/like`);
+    await this.notifyService.sendLikeCount({difference: Difference.add, idPost: idPost})
   }
 
   @ApiResponse(unauthorized)
@@ -35,7 +38,7 @@ export class LikesController {
   @Delete('/:id')
   async delete(@Token() token: string, @Param('id', ParseIntPipe) idPost: number) {
     await this.httpService.axiosRef.delete(`${this.likeUrl}/${idPost}`, authHeader(token));
-    await this.httpService.axiosRef.delete(`${this.postUrl}/${idPost}/like`);
+    await this.notifyService.sendLikeCount({difference: Difference.sub, idPost: idPost})
   }
 
   @Get('/:id')

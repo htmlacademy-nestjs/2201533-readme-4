@@ -7,11 +7,20 @@ import { FollowersController } from './followers.controller';
 import { PostsController } from './posts.controller';
 import { FilesController } from './files.controller';
 import { HttpModule } from '@nestjs/axios';
-import { getHttpOptions } from '@project/util/util-core';
-import { BffService } from './bff.service';
+import { BffService } from './services/bff.service';
+import {RabbitService} from './services/rabbit.service';
+import {RabbitMQModule} from '@golevelup/nestjs-rabbitmq';
+import {getHttpOptions, getRabbitMQOptions} from '@project/shared/modules-options';
 
 @Module({
-  imports: [ConfigBffModule, HttpModule.registerAsync(getHttpOptions('http'))],
+  imports: [
+    ConfigBffModule,
+    HttpModule.registerAsync(getHttpOptions('http')),
+    RabbitMQModule.forRootAsync(
+      RabbitMQModule,
+      getRabbitMQOptions('rabbit')
+    )
+  ],
   controllers: [
     UsersController,
     CommentsController,
@@ -19,7 +28,7 @@ import { BffService } from './bff.service';
     FollowersController,
     PostsController,
   ],
-  providers: [FilesController, BffService],
+  providers: [FilesController, BffService, RabbitService],
   exports: [FilesController],
 })
 export class AppModule {}

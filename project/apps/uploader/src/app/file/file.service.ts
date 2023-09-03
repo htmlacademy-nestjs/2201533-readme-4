@@ -1,5 +1,4 @@
 import {Inject, Injectable, NotFoundException} from '@nestjs/common';
-import {uploaderConfig} from '@project/config/config-uploader';
 import {ConfigType} from '@nestjs/config'
 import {ensureDir} from 'fs-extra'
 import { writeFile } from 'node:fs/promises';
@@ -8,6 +7,7 @@ import {FileRepository} from './file.repository';
 import {FileEntity} from './file.entity';
 import * as crypto from 'node:crypto';
 import {Extensions} from '@project/shared/shared-consts';
+import {uploadConfig} from '@project/config/config-modules';
 
 type WritenFile = {
   hashName: string;
@@ -19,13 +19,13 @@ type WritenFile = {
 @Injectable()
 export class FileService {
   constructor(
-    @Inject(uploaderConfig.KEY)
-    private readonly applicationConfig: ConfigType<typeof uploaderConfig>,
+    @Inject(uploadConfig.KEY)
+    private readonly uploaderConfig: ConfigType<typeof uploadConfig>,
     private readonly fileRepository: FileRepository
   ) {}
   private async writeFile(file: Express.Multer.File): Promise<WritenFile> {
     const [ year, month , day] = dayjs().format('YYYY MM DD').split(' ');
-    const { uploadDirectory } = this.applicationConfig;
+    const { uploadDirectory } = this.uploaderConfig;
     const subDirectory = `${year}/${month}/$${day}`;
     const uploadDirectoryPath = `${uploadDirectory}/${subDirectory}`;
 

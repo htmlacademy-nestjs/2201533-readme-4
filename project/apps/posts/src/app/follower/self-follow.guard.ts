@@ -1,6 +1,7 @@
 import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
-import {SelfFollowException} from "@project/util/util-core";
-import {FollowerService} from "./follower.service";
+import {SelfFollowException} from '@project/util/util-core';
+import {FollowerService} from './follower.service';
+import {ExistFollowException} from "@project/util/util-core";
 
 @Injectable()
 export class SelfFollowGuard implements CanActivate {
@@ -8,16 +9,19 @@ export class SelfFollowGuard implements CanActivate {
     private readonly followerService: FollowerService
   ) {}
 
-  canActivate(
+  async canActivate(
     context: ExecutionContext,
-  ): boolean | Promise<boolean> {
+  ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const followedId = request.body.followed;
     const followerId = request.user.id;
     if (followedId === followerId) {
-      throw new SelfFollowException()
+      throw new SelfFollowException();
     }
-
+    const check = await this.followerService.check(followerId, followedId);
+    if (check) {
+      throw new ExistFollowException();
+    }
     return true;
   }
 }
