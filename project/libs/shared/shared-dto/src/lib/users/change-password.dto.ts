@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsString, MaxLength, MinLength} from 'class-validator';
-import {userMax, userMin} from '@project/shared/shared-consts';
+import {userValidationMax, userValidationMin} from '@project/shared/shared-consts';
 
 export class ChangePasswordDto {
   @ApiProperty({
@@ -15,7 +15,7 @@ export class ChangePasswordDto {
     example: '1234567',
   })
   @IsString()
-  @MinLength(userMin.password)
-  @MaxLength(userMax.password)
+  @MinLength(userValidationMin.password)
+  @MaxLength(userValidationMax.password)
   public newPassword: string;
 }

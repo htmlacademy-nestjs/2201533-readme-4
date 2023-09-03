@@ -12,13 +12,13 @@ import {HttpService} from '@nestjs/axios';
 import {ConfigType} from '@nestjs/config';
 import {ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {NotExistPost} from './guards/not-exist-post.guard';
-import {apiAuthHeader, authHeader, created, unauthorized} from '@project/shared/shared-api-consts';
+import {apiAuthHeader, created, unauthorized} from '@project/shared/shared-api-consts';
 import {BffService} from './services/bff.service';
 import {BigCommentRdo} from './rdo/big-comment.rdo';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
 import {RabbitService} from './services/rabbit.service';
 import {Difference} from '@project/util/util-types';
-import {fillObject} from '@project/util/util-core';
+import {fillObject, getAuthHeader} from '@project/util/util-core';
 
 @ApiTags('comments')
 @Controller('comments')
@@ -43,7 +43,7 @@ export class CommentsController {
   @UseGuards(NotExistPost)
   async create(@Body(new ValidationPipe({transform: true})) dto: CreateCommentDto, @Token() token: string) {
     const {data} =
-      await this.httpService.axiosRef.post(`${this.config.comments}`, dto, authHeader(token));
+      await this.httpService.axiosRef.post(`${this.config.comments}`, dto, getAuthHeader(token));
       await this.notifyService.sendCommentsCount({difference: Difference.add, idPost: dto.idPost});
     return this.fillAuthor(data);
   }
@@ -53,7 +53,7 @@ export class CommentsController {
   @ApiResponse(unauthorized)
   @ApiHeader(apiAuthHeader)
   async delete(@Token() token: string, @Param('id', ParseIntPipe) id: number) {
-    const {data} = await this.httpService.axiosRef.delete(`${this.config.comments}/${id}`, authHeader(token));
+    const {data} = await this.httpService.axiosRef.delete(`${this.config.comments}/${id}`, getAuthHeader(token));
     await this.notifyService.sendCommentsCount({difference: Difference.sub, idPost: data.idPost})
   }
 
@@ -61,7 +61,7 @@ export class CommentsController {
   async index(@Param('id', ParseIntPipe) idPost: number, @QueryRaw() filters: string) {
     const {data} = await this.httpService.axiosRef.get(`${this.config.comments}/${idPost}${filters}`)
     const promises = data.map((item: CommentRdo) => this.fillAuthor(item))
-    return await Promise.all(promises);
+    return Promise.all(promises);
   }
 
 }

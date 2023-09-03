@@ -11,7 +11,7 @@ import {
 import {Transform} from 'class-transformer';
 import {IsTag} from '@project/util/util-core';
 import {transformTags} from '@project/util/util-core';
-import {postMax, postMin, validationMessage} from '@project/shared/shared-consts';
+import {postValidationMax, postValidationMin, ValidationMessage} from '@project/shared/shared-consts';
 import {ApiExtraModels, ApiProperty, getSchemaPath} from '@nestjs/swagger';
 import {UpdateTextDto} from './content/update-text.dto';
 import {UpdateVideoDto} from './content/update-video.dto';
@@ -41,16 +41,16 @@ export class UpdatePostDto {
   content?: UpdateContentDto;
 
   @IsOptional()
-  @ArrayMaxSize(postMax.tagsSize)
-  @MinLength(postMin.tag, {each: true})
-  @MaxLength(postMax.tag, {each: true})
+  @ArrayMaxSize(postValidationMax.tagsSize)
+  @MinLength(postValidationMin.Tag, {each: true})
+  @MaxLength(postValidationMax.Tag, {each: true})
   @ApiProperty({
     description: '',
     example: '',
   })
   @IsTag({
     each: true,
-    message: validationMessage.tag
+    message: ValidationMessage.Tag
   })
   @Transform((params)=> transformTags(params.value))
   tags?: string[];

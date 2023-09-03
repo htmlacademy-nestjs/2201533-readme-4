@@ -4,11 +4,12 @@ import {appsConfig} from '@project/config/config-modules';
 import {ConfigType} from '@nestjs/config';
 import {Token} from '@project/shared/shared-mediators';
 import {ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {apiAuthHeader, authHeader, created, unauthorized} from '@project/shared/shared-api-consts';
+import {apiAuthHeader, created, unauthorized} from '@project/shared/shared-api-consts';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
-import {NotExistPost} from "./guards/not-exist-post.guard";
-import {Difference} from "@project/util/util-types";
-import {RabbitService} from "./services/rabbit.service";
+import {NotExistPost} from './guards/not-exist-post.guard';
+import {Difference} from '@project/util/util-types';
+import {RabbitService} from './services/rabbit.service';
+import {getAuthHeader} from '@project/util/util-core';
 
 @ApiTags('likes')
 @Controller('likes')
@@ -29,7 +30,7 @@ export class LikesController {
   @ApiResponse(created('like'))
   @UseGuards(NotExistPost)
   async create(@Token() token: string, @Param('id', ParseIntPipe) idPost: number) {
-    await this.httpService.axiosRef.post(`${this.likeUrl}/${idPost}`, '', authHeader(token));
+    await this.httpService.axiosRef.post(`${this.likeUrl}/${idPost}`, '', getAuthHeader(token));
     await this.notifyService.sendLikeCount({difference: Difference.add, idPost: idPost})
   }
 
@@ -37,13 +38,13 @@ export class LikesController {
   @ApiHeader(apiAuthHeader)
   @Delete('/:id')
   async delete(@Token() token: string, @Param('id', ParseIntPipe) idPost: number) {
-    await this.httpService.axiosRef.delete(`${this.likeUrl}/${idPost}`, authHeader(token));
+    await this.httpService.axiosRef.delete(`${this.likeUrl}/${idPost}`, getAuthHeader(token));
     await this.notifyService.sendLikeCount({difference: Difference.sub, idPost: idPost})
   }
 
   @Get('/:id')
   async isLike(@Token() token: string,@Param('id', ParseIntPipe) idPost: number) {
-    const {data} = await this.httpService.axiosRef.get(`${this.likeUrl}/${idPost}`, authHeader(token));
+    const {data} = await this.httpService.axiosRef.get(`${this.likeUrl}/${idPost}`, getAuthHeader(token));
     return data;
   }
 

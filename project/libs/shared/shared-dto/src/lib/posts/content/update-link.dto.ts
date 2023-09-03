@@ -1,5 +1,5 @@
 import {IsString, IsUrl, MaxLength} from 'class-validator';
-import {postMax} from '@project/shared/shared-consts';
+import {postValidationMax} from '@project/shared/shared-consts';
 import {Expose} from 'class-transformer';
 import {ApiProperty} from "@nestjs/swagger";
 
@@ -13,7 +13,7 @@ export class UpdateLinkDto {
   public url: string;
 
   @IsString()
-  @MaxLength(postMax.link)
+  @MaxLength(postValidationMax.link)
   @Expose()
   @ApiProperty({
     description: 'link description',

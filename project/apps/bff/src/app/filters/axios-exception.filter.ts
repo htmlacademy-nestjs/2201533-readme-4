@@ -9,7 +9,7 @@ export class AxiosExceptionFilter implements ExceptionFilter {
 
   makeMessage = (error: AxiosError) => {
     return {
-      Error: error.cause.message,
+      error: error.cause.message,
       url: error.config.url
     };
   }

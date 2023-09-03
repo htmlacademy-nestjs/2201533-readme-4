@@ -1,9 +1,9 @@
-import {ClassConstructor, instanceToPlain, plainToInstance} from 'class-transformer';
-import {isUppercase} from "class-validator";
+import {ClassConstructor, plainToInstance} from 'class-transformer';
+import {isUppercase} from 'class-validator';
 
 export type DateTimeUnit = 's' | 'h' | 'd' | 'm' | 'y';
 export type TimeInUnit = { value: number; unit: DateTimeUnit };
-const TimeInUnitRegex = /^(\d+)([shdmy])/;
+const timeInUnitRegex = /^(\d+)([shdmy])/;
 
 
 export const getMongoURI = (
@@ -23,12 +23,8 @@ export function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
   return plainToInstance(someDto, plainObject, {excludeExtraneousValues: true});
 }
 
-export function fillPlain<T>(someDto: T): object {
-  return instanceToPlain(someDto, {exposeUnsetFields: false});
-}
-
 export function parseTime(time: string): TimeInUnit {
-  const match = TimeInUnitRegex.exec(time);
+  const match = timeInUnitRegex.exec(time);
 
   if (!match) {
     throw new Error(`[parseTime] Bad time string: ${time}`);
@@ -54,3 +50,9 @@ export function camelCaseToEnvStyle(camel: string, prefix: string) {
   return `${ prefix ? `${prefix.toUpperCase()}_` : ''}${camel.split('').map((letter, index) =>
     isUppercase(letter) && index > 0 ? `_${letter}` : letter).join('').toUpperCase()}`;
 }
+
+export const getAuthHeader = (token: string) => ({
+  headers: {
+    'Authorization': token
+  }
+});

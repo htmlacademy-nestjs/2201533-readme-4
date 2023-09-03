@@ -1,6 +1,6 @@
 import {IsEmail, IsMongoId, IsString, MaxLength, MinLength} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
-import {userMax, userMin} from '@project/shared/shared-consts';
+import {userValidationMax, userValidationMin} from '@project/shared/shared-consts';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -15,8 +15,8 @@ export class CreateUserDto {
     example: 'Jack',
   })
   @IsString()
-  @MinLength(userMin.name)
-  @MaxLength(userMax.name)
+  @MinLength(userValidationMin.name)
+  @MaxLength(userValidationMax.name)
   public name: string;
 
   @ApiProperty({
@@ -24,8 +24,8 @@ export class CreateUserDto {
     example: '1234567',
   })
   @IsString()
-  @MinLength(userMin.password)
-  @MaxLength(userMax.password)
+  @MinLength(userValidationMin.password)
+  @MaxLength(userValidationMax.password)
   public password: string;
 
   @ApiProperty({

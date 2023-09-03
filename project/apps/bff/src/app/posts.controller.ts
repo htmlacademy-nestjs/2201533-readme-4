@@ -25,7 +25,6 @@ import {getSortNames, getTypeNames} from '@project/shared/shared-types';
 import {PostInterceptor} from './guards/post.interceptor';
 import {
   apiAuthHeader,
-  authHeader,
   created,
   existsRepost,
   notAuthor,
@@ -35,6 +34,7 @@ import {
 import {RabbitService} from './services/rabbit.service';
 import {Difference} from '@project/util/util-types';
 import {appsConfig} from '@project/config/config-modules';
+import {getAuthHeader} from '@project/util/util-core';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -54,7 +54,7 @@ export class PostsController {
   @ApiResponse(created('post'))
   async create(@Body() dto: CreatePostDto, @Token() token: string) {
     const {data} = await this.httpService.axiosRef.post(
-      `${this.config.posts}/`, dto, authHeader(token));
+      `${this.config.posts}/`, dto, getAuthHeader(token));
     await this.notifyService.sendPostsCount({idUser: data.userId, difference: Difference.add});
     // await this.httpService.axiosRef.post(`${this.config.users}/post`, '',authHeader(token));
     return data;
@@ -74,7 +74,7 @@ export class PostsController {
   @ApiResponse(pubSuccessful)
   async showDraft(@Token() token: string) {
     const posts =
-      await this.httpService.axiosRef.get(`${this.config.posts}/draft`,authHeader(token))
+      await this.httpService.axiosRef.get(`${this.config.posts}/draft`,getAuthHeader(token))
     return posts.data;
   }
 
@@ -85,7 +85,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async setDraft(@Param('id', ParseIntPipe) id: number, @Token() token: string) {
     const post =
-      await this.httpService.axiosRef.post(`${this.config.posts}/draft/${id}`,'', authHeader(token));
+      await this.httpService.axiosRef.post(`${this.config.posts}/draft/${id}`,'', getAuthHeader(token));
     return post.data;
   }
 
@@ -96,7 +96,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async deleteDraft(@Param('id', ParseIntPipe) id: number, @Token() token: string) {
     const post =
-      await this.httpService.axiosRef.delete(`${this.config.posts}/draft/${id}`, authHeader(token))
+      await this.httpService.axiosRef.delete(`${this.config.posts}/draft/${id}`, getAuthHeader(token))
     return post.data;
   }
 
@@ -109,7 +109,7 @@ export class PostsController {
   @ApiQuery({ name: 'page', type: 'number', description: 'page number', required: false})
   async showTape(@Token() token: string, @QueryRaw() filters: string) {
     const posts =
-      await this.httpService.axiosRef.get(`${this.config.posts}/tape${filters}`, authHeader(token))
+      await this.httpService.axiosRef.get(`${this.config.posts}/tape${filters}`, getAuthHeader(token))
     return posts.data;
   }
 
@@ -120,7 +120,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async repost(@Token() token: string, @Param('id', ParseIntPipe) id: number) {
     const post =
-      await this.httpService.axiosRef.post(`${this.config.posts}/repost/${id}`,'', authHeader(token));
+      await this.httpService.axiosRef.post(`${this.config.posts}/repost/${id}`,'', getAuthHeader(token));
     return post.data;
   }
 
@@ -153,7 +153,7 @@ export class PostsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async destroy(@Param('id', ParseIntPipe) id: number, @Token() token: string) {
-    const {data} = await this.httpService.axiosRef.delete(`${this.config.posts}/${id}`, authHeader(token));
+    const {data} = await this.httpService.axiosRef.delete(`${this.config.posts}/${id}`, getAuthHeader(token));
     await this.notifyService.sendPostsCount({idUser: data.userId, difference: Difference.sub});
     await this.notifyService.deleteComments(id);
     await this.notifyService.deleteLikes(id);
@@ -168,7 +168,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async update(@Body() dto: UpdatePostDto, @Token() token: string, @Param('id', ParseIntPipe) id: number) {
     const post =
-      await this.httpService.axiosRef.patch(`${this.config.posts}/${id}`, dto, authHeader(token));
+      await this.httpService.axiosRef.patch(`${this.config.posts}/${id}`, dto, getAuthHeader(token));
     return post.data;
   }
 }

@@ -1,4 +1,4 @@
-import {CanActivate, ExecutionContext, ForbiddenException, Injectable} from '@nestjs/common';
+import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
 import {PostService} from '../post.service';
 import {ExistsRepostException, fillObject} from '@project/util/util-core';
 import {CreatePostDto, fillCreateDto} from '@project/shared/shared-dto';

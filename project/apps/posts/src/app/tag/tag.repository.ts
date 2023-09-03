@@ -30,7 +30,7 @@ export class TagRepository {
   public async findByTag(tag: string): Promise<Tag> {
     return this.prisma.tag.findFirst({
       where: {
-        tag
+        tag: tag
       }
     })
   }
@@ -38,7 +38,7 @@ export class TagRepository {
   public async findOneOrCreate(tag: string, tx?: PrismaService): Promise<Tag> {
     const found = await this.findByTag(tag);
     if (!found) {
-      const entity = new TagEntity({tag})
+      const entity = new TagEntity({tag: tag})
       return this.create(entity, tx);
     }
     return found;
