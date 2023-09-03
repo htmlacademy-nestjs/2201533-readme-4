@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   ParseIntPipe,
   Patch,
@@ -157,10 +155,10 @@ export class PostController {
   @ApiHeader(apiAuthHeader)
   @UseGuards(JwtAuthGuard, PostAuthorGuard)
   @ApiParam({name: 'id', description: 'post id', example: 17})
-  @HttpCode(HttpStatus.NO_CONTENT)
   @UseInterceptors(PostDeleteInterceptor)
   async destroy(@Param('id', ParseIntPipe) id: number) {
-    await this.postService.deletePost(id);
+    const post = await this.postService.deletePost(id);
+    return fillObject(PostRdo, post);
   }
 
   @Patch('/:id')
@@ -179,24 +177,24 @@ export class PostController {
   @Post('/:id/comment')
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async addComment(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.changeCount(id, Counters.commentCount, Difference.up);
+    return this.postService.changeCount(id, Counters.commentCount, Difference.add);
   }
 
   @Delete('/:id/comment')
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async deleteComment(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.changeCount(id, Counters.commentCount, Difference.down);
+    return this.postService.changeCount(id, Counters.commentCount, Difference.sub);
   }
 
   @ApiParam({name: 'id', description: 'post id', example: 17})
   @Post('/:id/like')
   async addLike(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.changeCount(id, Counters.likeCount, Difference.up);
+    return this.postService.changeCount(id, Counters.likeCount, Difference.add);
   }
 
   @ApiParam({name: 'id', description: 'post id', example: 17})
   @Delete('/:id/like')
   async deleteLike(@Param('id', ParseIntPipe) id: number) {
-    return this.postService.changeCount(id, Counters.likeCount, Difference.down);
+    return this.postService.changeCount(id, Counters.likeCount, Difference.sub);
   }
 }

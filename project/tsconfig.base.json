@@ -15,20 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@project/config/config-comments": [
-        "libs/config/config-comments/src/index.ts"
-      ],
       "@project/config/config-modules": [
         "libs/config/config-modules/src/index.ts"
       ],
-      "@project/config/config-notify": [
-        "libs/config/config-notify/src/index.ts"
-      ],
-      "@project/config/config-posts": ["libs/config/config-posts/src/index.ts"],
-      "@project/config/config-uploader": [
-        "libs/config/config-uploader/src/index.ts"
-      ],
-      "@project/config/config-users": ["libs/config/config-users/src/index.ts"],
       "@project/models/comments-models": [
         "libs/models/comments-models/src/index.ts"
       ],
@@ -39,6 +28,9 @@
         "libs/models/mongo-schemas/src/index.ts"
       ],
       "@project/models/post-models": ["libs/models/post-models/src/index.ts"],
+      "@project/shared/modules-options": [
+        "libs/shared/modules-options/src/index.ts"
+      ],
       "@project/shared/shared-api-consts": [
         "libs/shared/shared-api-consts/src/index.ts"
       ],

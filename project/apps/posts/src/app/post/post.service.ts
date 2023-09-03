@@ -1,14 +1,13 @@
 import {Injectable} from '@nestjs/common';
 import {PostRepository} from './post.repository';
 import {TagRepository} from '../tag/tag.repository';
-import {CreatePostDto} from '@project/shared/shared-dto';
+import {CreatePostDto, UpdatePostDto} from '@project/shared/shared-dto';
 import {Counters, Post, Type} from '@project/shared/shared-types';
 import {PostEntity} from './post.entity';
-import {UpdatePostDto} from '@project/shared/shared-dto';
 import {ContentRepository} from '../content/content.repository';
 import {mapPostTypeToCreator} from '../content/content.entity';
 import {PrismaService} from '../prisma/prisma.service';
-import {PostFilter, GetPostsFilter} from './helpers/posts-filter.interface';
+import {GetPostsFilter, PostFilter} from './helpers/posts-filter.interface';
 
 @Injectable()
 export class PostService {
@@ -101,10 +100,10 @@ export class PostService {
       return service.prisma.$transaction(async (tx: PrismaService) => {
 
         await service.contentRepository.delete(contentId, type, tx);
-        await service.postRepository.delete(id, tx);
+        return service.postRepository.delete(id, tx);
       })
     }
-    await deletePost(this);
+    return await deletePost(this);
   }
 
   async changeCount(id: number, field: Counters, difference: number) {

@@ -1,23 +1,23 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
   UseFilters,
-  Param,
-  ParseIntPipe, Delete, Patch, UseInterceptors, HttpCode, HttpStatus,
+  UseInterceptors,
 } from '@nestjs/common';
-import {
-  CreatePostDto,
-  UpdatePostDto
-} from '@project/shared/shared-dto';
-import {appsConfig} from '@project/util/util-core';
+import {CreatePostDto, UpdatePostDto} from '@project/shared/shared-dto';
 import {HttpService} from '@nestjs/axios';
 import {ConfigType} from '@nestjs/config';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
-import {Token} from '@project/shared/shared-mediators';
-import {QueryRaw} from '@project/shared/shared-mediators';
+import {QueryRaw, Token} from '@project/shared/shared-mediators';
 import {PhotoFilter} from './guards/photo-filter.interceptor';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {ApiHeader, ApiParam, ApiQuery, ApiResponse, ApiTags} from '@nestjs/swagger';
@@ -25,12 +25,16 @@ import {getSortNames, getTypeNames} from '@project/shared/shared-types';
 import {PostInterceptor} from './guards/post.interceptor';
 import {
   apiAuthHeader,
-  authHeader,
-  created, existsRepost,
+  created,
+  existsRepost,
   notAuthor,
   pubSuccessful,
   unauthorized
 } from '@project/shared/shared-api-consts';
+import {RabbitService} from './services/rabbit.service';
+import {Difference} from '@project/util/util-types';
+import {appsConfig} from '@project/config/config-modules';
+import {getAuthHeader} from '@project/util/util-core';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -40,6 +44,7 @@ export class PostsController {
   constructor(
     private readonly httpService: HttpService,
     @Inject (appsConfig.KEY) private readonly config: ConfigType<typeof appsConfig>,
+    private readonly notifyService: RabbitService
   ) {}
 
   @Post('/')
@@ -48,10 +53,11 @@ export class PostsController {
   @UseInterceptors(FileInterceptor('file'), PhotoFilter)
   @ApiResponse(created('post'))
   async create(@Body() dto: CreatePostDto, @Token() token: string) {
-    const post = await this.httpService.axiosRef.post(
-      `${this.config.posts}/`, dto, authHeader(token));
-    await this.httpService.axiosRef.post(`${this.config.users}/post`, '',authHeader(token));
-    return post.data;
+    const {data} = await this.httpService.axiosRef.post(
+      `${this.config.posts}/`, dto, getAuthHeader(token));
+    await this.notifyService.sendPostsCount({idUser: data.userId, difference: Difference.add});
+    // await this.httpService.axiosRef.post(`${this.config.users}/post`, '',authHeader(token));
+    return data;
   }
 
   @Get('/find')
@@ -68,7 +74,7 @@ export class PostsController {
   @ApiResponse(pubSuccessful)
   async showDraft(@Token() token: string) {
     const posts =
-      await this.httpService.axiosRef.get(`${this.config.posts}/draft`,authHeader(token))
+      await this.httpService.axiosRef.get(`${this.config.posts}/draft`,getAuthHeader(token))
     return posts.data;
   }
 
@@ -79,7 +85,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async setDraft(@Param('id', ParseIntPipe) id: number, @Token() token: string) {
     const post =
-      await this.httpService.axiosRef.post(`${this.config.posts}/draft/${id}`,'', authHeader(token));
+      await this.httpService.axiosRef.post(`${this.config.posts}/draft/${id}`,'', getAuthHeader(token));
     return post.data;
   }
 
@@ -90,7 +96,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async deleteDraft(@Param('id', ParseIntPipe) id: number, @Token() token: string) {
     const post =
-      await this.httpService.axiosRef.delete(`${this.config.posts}/draft/${id}`, authHeader(token))
+      await this.httpService.axiosRef.delete(`${this.config.posts}/draft/${id}`, getAuthHeader(token))
     return post.data;
   }
 
@@ -103,7 +109,7 @@ export class PostsController {
   @ApiQuery({ name: 'page', type: 'number', description: 'page number', required: false})
   async showTape(@Token() token: string, @QueryRaw() filters: string) {
     const posts =
-      await this.httpService.axiosRef.get(`${this.config.posts}/tape${filters}`, authHeader(token))
+      await this.httpService.axiosRef.get(`${this.config.posts}/tape${filters}`, getAuthHeader(token))
     return posts.data;
   }
 
@@ -114,7 +120,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async repost(@Token() token: string, @Param('id', ParseIntPipe) id: number) {
     const post =
-      await this.httpService.axiosRef.post(`${this.config.posts}/repost/${id}`,'', authHeader(token));
+      await this.httpService.axiosRef.post(`${this.config.posts}/repost/${id}`,'', getAuthHeader(token));
     return post.data;
   }
 
@@ -147,10 +153,11 @@ export class PostsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async destroy(@Param('id', ParseIntPipe) id: number, @Token() token: string) {
-    await this.httpService.axiosRef.delete(`${this.config.posts}/${id}`, authHeader(token));
-    await this.httpService.axiosRef.delete(`${this.config.comments}/post/${id}`, authHeader(token));
-    await this.httpService.axiosRef.delete(`${this.config.likes}/post/${id}`, authHeader(token));
-    await this.httpService.axiosRef.delete(`${this.config.users}/post`, authHeader(token));
+    const {data} = await this.httpService.axiosRef.delete(`${this.config.posts}/${id}`, getAuthHeader(token));
+    await this.notifyService.sendPostsCount({idUser: data.userId, difference: Difference.sub});
+    await this.notifyService.deleteComments(id);
+    await this.notifyService.deleteLikes(id);
+    return data;
   }
 
   @Patch('/:id')
@@ -161,7 +168,7 @@ export class PostsController {
   @ApiParam({name: 'id', description: 'post id', example: 17})
   async update(@Body() dto: UpdatePostDto, @Token() token: string, @Param('id', ParseIntPipe) id: number) {
     const post =
-      await this.httpService.axiosRef.patch(`${this.config.posts}/${id}`, dto, authHeader(token));
+      await this.httpService.axiosRef.patch(`${this.config.posts}/${id}`, dto, getAuthHeader(token));
     return post.data;
   }
 }

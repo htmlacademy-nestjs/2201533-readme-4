@@ -1,12 +1,12 @@
 import {IsString, MaxLength, MinLength} from 'class-validator';
-import {postMax, postMin} from '@project/shared/shared-consts'
+import {postValidationMax, postValidationMin} from '@project/shared/shared-consts'
 import {Expose} from 'class-transformer';
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateTextDto {
   @IsString()
-  @MinLength(postMin.title)
-  @MaxLength(postMax.title)
+  @MinLength(postValidationMin.title)
+  @MaxLength(postValidationMax.title)
   @Expose()
   @ApiProperty({
     description: 'Title of the publication',
@@ -15,8 +15,8 @@ export class CreateTextDto {
   title: string;
 
   @IsString()
-  @MinLength(postMin.announcement)
-  @MaxLength(postMax.announcement)
+  @MinLength(postValidationMin.announcement)
+  @MaxLength(postValidationMax.announcement)
   @Expose()
   @ApiProperty({
     description: 'Abstract for publication',
@@ -25,8 +25,8 @@ export class CreateTextDto {
   announcement: string;
 
   @IsString()
-  @MinLength(postMin.text)
-  @MaxLength(postMax.text)
+  @MinLength(postValidationMin.text)
+  @MaxLength(postValidationMax.text)
   @Expose()
   @ApiProperty({
     description: 'Text of the publication',

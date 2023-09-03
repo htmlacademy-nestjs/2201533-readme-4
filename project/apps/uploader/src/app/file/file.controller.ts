@@ -4,21 +4,23 @@ import {FileInterceptor} from '@nestjs/platform-express';
 import 'multer';
 import {fillObject} from '@project/util/util-core';
 import {UploadedFileRdo} from '@project/shared/shared-dto';
-import {uploaderConfig} from '@project/config/config-uploader';
 import {ConfigType} from '@nestjs/config';
 import {ApiTags} from "@nestjs/swagger";
+import {appConfig, uploadConfig} from '@project/config/config-modules';
 
 @ApiTags('upload')
 @Controller('file')
 export class FileController {
   constructor(
     private readonly fileService: FileService,
-    @Inject(uploaderConfig.KEY)
-    private readonly applicationConfig: ConfigType<typeof uploaderConfig>,
+    @Inject(uploadConfig.KEY)
+    private readonly uploaderConfig: ConfigType<typeof uploadConfig>,
+    @Inject(appConfig.KEY)
+    private readonly applicationConfig: ConfigType<typeof appConfig>,
   ) {}
 
   path = (file: string) =>
-    `http://${this.applicationConfig.host}:${this.applicationConfig.port}${this.applicationConfig.serveRoot}${file}`;
+    `http://${this.uploaderConfig.host}:${this.applicationConfig.port}${this.uploaderConfig.serveRoot}${file}`;
 
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))

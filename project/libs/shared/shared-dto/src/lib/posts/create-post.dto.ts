@@ -11,7 +11,7 @@ import {
   ValidateNested
 } from 'class-validator';
 import {Type} from '@project/shared/shared-types';
-import {postMax, postMin, validationMessage} from '@project/shared/shared-consts';
+import {postValidationMax, postValidationMin, ValidationMessage} from '@project/shared/shared-consts';
 import {IsTag} from '@project/util/util-core';
 import {Expose, Transform} from 'class-transformer';
 import {transformTags} from '@project/util/util-core';
@@ -36,7 +36,7 @@ export class CreatePostDto {
   @Expose()
   type: string;
 
-  @ValidateNested({message: validationMessage.badContent})
+  @ValidateNested({message: ValidationMessage.BadContent})
   @ApiProperty({
    oneOf: [
       { $ref: getSchemaPath(CreateTextDto) },
@@ -64,12 +64,12 @@ export class CreatePostDto {
       "дрова"
     ],
   })
-  @ArrayMaxSize(postMax.tagsSize)
-  @MinLength(postMin.tag, {each: true})
-  @MaxLength(postMax.tag, {each: true})
+  @ArrayMaxSize(postValidationMax.tagsSize)
+  @MinLength(postValidationMin.Tag, {each: true})
+  @MaxLength(postValidationMax.Tag, {each: true})
   @IsTag({
     each: true,
-    message: validationMessage.tag
+    message: ValidationMessage.Tag
   })
   @Transform((params) => transformTags(params.value))
   @Expose()

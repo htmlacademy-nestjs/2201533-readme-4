@@ -16,7 +16,6 @@ export * from './lib/comments-filter.interface';
 export * from './lib/like.interface';
 export * from './lib/file.interface';
 export * from './lib/subscriber.interface';
-export * from './lib/rabbit-routing.enum';
 export * from './lib/email-post.interface';
 export * from './lib/token.interface';
 export * from './lib/refresh-token-payload.interface';

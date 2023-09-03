@@ -2,9 +2,8 @@ import {CRUDRepository} from '@project/util/util-types';
 import {UserEntity} from './user.entity';
 import {UserModel} from '@project/models/mongo-schemas';
 import {InjectModel} from '@nestjs/mongoose';
-import {Counters, SortFieldsEnum, UserType} from '@project/shared/shared-types';
+import {Counters, UserType} from '@project/shared/shared-types';
 import {Model} from 'mongoose';
-import {Logger} from '@nestjs/common';
 
 export class UserRepository implements CRUDRepository<UserEntity, string, UserType> {
   constructor(

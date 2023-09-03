@@ -2,14 +2,15 @@ import {ConflictException, Inject, Injectable, NotFoundException, UnauthorizedEx
 import {ConfigType} from '@nestjs/config';
 import {Counters, UserType} from '@project/shared/shared-types';
 import {UserRepository} from './user.repository';
-import {UserExceptionMessages} from '@project/shared/shared-consts';
+import {UserExceptionMessage} from '@project/shared/shared-consts';
 import {UserEntity} from './user.entity';
 import {LoginUserDto} from './dto/login-user.dto';
 import {CreateUserDto, UpdateUserDto} from '@project/shared/shared-dto';
 import {JwtService} from '@nestjs/jwt';
 import {RefreshTokenService} from "../refresh-token/refresh-token.service";
-import {createJWTPayload, jwtUsersConfig} from '@project/util/util-core';
+import {createJWTPayload} from '@project/util/util-core';
 import * as crypto from 'node:crypto';
+import {jwtUsersConfig} from '@project/config/config-modules';
 
 @Injectable()
 export class UserService {
@@ -30,7 +31,7 @@ export class UserService {
     const existedUser = await this.userRepository.findByEmail(email);
 
     if (existedUser) {
-      throw new ConflictException(UserExceptionMessages.USER_EXISTS);
+      throw new ConflictException(UserExceptionMessage.UserExists);
     }
 
     const userEntity = await new UserEntity(user)
@@ -49,12 +50,12 @@ export class UserService {
     const existedUser = await this.userRepository.findByEmail(email);
 
     if (!existedUser) {
-      throw new NotFoundException(UserExceptionMessages.USER_NOT_FOUND);
+      throw new NotFoundException(UserExceptionMessage.UserNotFound);
     }
 
     const userEntity = new UserEntity(existedUser);
     if (!await userEntity.comparePassword(password)) {
-      throw new UnauthorizedException(UserExceptionMessages.USER_PASSWORD_WRONG);
+      throw new UnauthorizedException(UserExceptionMessage.UserPasswordWrong);
     }
 
     return userEntity.toObject();
@@ -84,6 +85,11 @@ export class UserService {
 
   public async update(id: string, dto: UpdateUserDto) {
     return this.userRepository.update(id, new UserEntity(dto));
+  }
+
+  public async isExist(id: string) {
+    const foundUser = await this.userRepository.findById(id);
+    return foundUser !== null;
   }
 }
 

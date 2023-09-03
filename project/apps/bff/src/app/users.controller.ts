@@ -14,7 +14,7 @@ import {
   LoginUserDto, UpdateUserDto
 } from '@project/shared/shared-dto';
 import {ConfigType} from '@nestjs/config';
-import {appsConfig, fillObject} from '@project/util/util-core';
+import {fillObject, getAuthHeader} from '@project/util/util-core';
 import {ApiConsumes, ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {CreateUserDto} from '@project/shared/shared-dto';
 import {FileInterceptor} from '@nestjs/platform-express';
@@ -28,15 +28,15 @@ import {JsonPipe} from '@project/shared/shared-mediators';
 import {UserRdo} from './rdo/user.rdo';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
 import {FilesController} from './files.controller';
-import {BffService} from './bff.service';
+import {BffService} from './services/bff.service';
 import {
   apiAuthHeader, apiRefreshHeader,
-  authHeader,
   created,
   unauthorized,
   wrongLoginPass,
   wrongRefreshToken
 } from '@project/shared/shared-api-consts';
+import {appsConfig} from '@project/config/config-modules';
 
 
 @ApiTags('users')
@@ -99,7 +99,7 @@ export class UsersController {
 
     const image = await this.fileController.upload(file);
     const { data } = await this.httpService.axiosRef.patch(
-      `${this.config.users}/update`, {...updateUserDto, avatarId: image.id}, authHeader(token)
+      `${this.config.users}/update`, {...updateUserDto, avatarId: image.id}, getAuthHeader(token)
     )
 
     return fillObject(UserRdo, {...data, avatarPath: image.path})
@@ -116,7 +116,7 @@ export class UsersController {
   public async setPassword(@Body() dto: ChangePasswordDto, @Token() token: string) {
     const usersUrl = this.config.users;
     const { data } =
-      await this.httpService.axiosRef.patch(`${usersUrl}/password`, dto, authHeader(token));
+      await this.httpService.axiosRef.patch(`${usersUrl}/password`, dto, getAuthHeader(token));
     return data;
   }
 
@@ -125,7 +125,7 @@ export class UsersController {
   @Post('refresh')
   public async refreshToken(@Token() token: string) {
     const usersUrl = this.config.users;
-    const { data } = await this.httpService.axiosRef.post(`${usersUrl}/refresh`, null, authHeader(token));
+    const { data } = await this.httpService.axiosRef.post(`${usersUrl}/refresh`, null, getAuthHeader(token));
 
     return data;
   }

@@ -1,13 +1,13 @@
 import {IsString, MaxLength, MinLength} from 'class-validator';
-import {postMax, postMin, validationMessage} from '@project/shared/shared-consts';
+import {postValidationMax, postValidationMin, ValidationMessage} from '@project/shared/shared-consts';
 import {IsYoutubeUrl} from '@project/util/util-core';
 import {Expose} from 'class-transformer';
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateVideoDto {
   @IsString()
-  @MinLength(postMin.title)
-  @MaxLength(postMax.title)
+  @MinLength(postValidationMin.title)
+  @MaxLength(postValidationMax.title)
   @Expose()
   @ApiProperty({
     description: 'Title of the publication',
@@ -15,7 +15,7 @@ export class CreateVideoDto {
   })
   title: string;
 
-  @IsYoutubeUrl({message: validationMessage.videoUrl})
+  @IsYoutubeUrl({message: ValidationMessage.VideoUrl})
   @Expose()
   @ApiProperty({
     description: 'Link to youtube video',

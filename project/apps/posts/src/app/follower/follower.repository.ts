@@ -36,8 +36,8 @@ export class FollowerRepository
   public async findFollow(follower: string, followed: string) {
     return this.prisma.followers.findFirst( {
       where: {
-        followed,
-        follower
+        followed: followed,
+        follower: follower
       }
     })
   }

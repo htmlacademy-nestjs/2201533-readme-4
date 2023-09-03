@@ -3,7 +3,7 @@ import {FollowerRepository} from './follower.repository';
 import {Follower} from '@project/shared/shared-types';
 import {FollowerEntity} from './follower-entity';
 import {fillObject} from '@project/util/util-core';
-import {FollowDto, FollowRdo} from '@project/shared/shared-dto';
+import {FollowRdo} from '@project/shared/shared-dto';
 
 @Injectable()
 export class FollowerService {
@@ -22,8 +22,12 @@ export class FollowerService {
   }
 
   async count(followed: string) {
-    console.log('FollowerService follow', followed);
     return this.followerRepository.count(followed);
+  }
+
+  async check(follower: string, followed: string) {
+    const follow = await this.followerRepository.findFollow(follower, followed);
+    return follow !== null;
   }
 
 }

@@ -1,12 +1,12 @@
 import {IsOptional, IsString, MaxLength, MinLength} from 'class-validator';
-import {postMax, postMin} from '@project/shared/shared-consts';
+import {postValidationMax, postValidationMin} from '@project/shared/shared-consts';
 import {Expose} from 'class-transformer';
 import {ApiProperty} from "@nestjs/swagger";
 
 export class UpdateTextDto {
   @IsString()
-  @MinLength(postMin.title)
-  @MaxLength(postMax.title)
+  @MinLength(postValidationMin.title)
+  @MaxLength(postValidationMax.title)
   @IsOptional()
   @Expose()
   @ApiProperty({
@@ -16,8 +16,8 @@ export class UpdateTextDto {
   public title?: string;
 
   @IsString()
-  @MinLength(postMin.announcement)
-  @MaxLength(postMax.announcement)
+  @MinLength(postValidationMin.announcement)
+  @MaxLength(postValidationMax.announcement)
   @IsOptional()
   @Expose()
   @ApiProperty({
@@ -27,8 +27,8 @@ export class UpdateTextDto {
   public announcement?: string;
 
   @IsString()
-  @MinLength(postMin.text)
-  @MaxLength(postMax.text)
+  @MinLength(postValidationMin.text)
+  @MaxLength(postValidationMax.text)
   @IsOptional()
   @Expose()
   @ApiProperty({

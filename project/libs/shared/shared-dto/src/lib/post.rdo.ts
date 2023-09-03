@@ -64,19 +64,19 @@ export class PostRdo {
     example: [
       {
         "idTag": 1,
-        "tag": "холод"
+        "Tag": "холод"
       },
       {
         "idTag": 4,
-        "tag": "дрова"
+        "Tag": "дрова"
       },
       {
         "idTag": 9,
-        "tag": "лес"
+        "Tag": "лес"
       },
       {
         "idTag": 10,
-        "tag": "зима"
+        "Tag": "зима"
       }
     ],
   })

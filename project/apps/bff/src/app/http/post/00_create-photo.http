@@ -1,6 +1,6 @@
 # Posts
 
-## Создать новый пост типа текст user: "torans@overlook.net"
+## Создать новый пост типа текст user: "torans@overlook.net "
 
 POST http://localhost:4444/posts HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW

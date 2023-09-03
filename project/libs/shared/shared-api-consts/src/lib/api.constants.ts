@@ -1,22 +1,10 @@
-import {HttpStatus} from "@nestjs/common";
-import {PostRdo} from "../../../shared-dto/src/lib/post.rdo";
-
-
-export const authHeader = (token: string) => ({
-  headers: {
-    'Authorization': token
-  }
-});
+import {HttpStatus} from '@nestjs/common';
+import {PostRdo} from '@project/shared/shared-dto';
 
 export const created = (entity: string) => ({
   status: HttpStatus.CREATED,
   description: `The new ${entity} has been successfully created.`
 });
-
-export const apiAuthHeader = {
-  name: 'Authorization',
-  description: 'Authorization JWT-token',
-}
 
 export const unauthorized = {
   status: HttpStatus.UNAUTHORIZED,
@@ -34,11 +22,6 @@ export const existsRepost = {
 }
 
 
-export const apiRefreshHeader = {
-  name: 'Authorization',
-  description: 'Refresh JWT-token',
-}
-
 export const wrongRefreshToken = {
   status: HttpStatus.UNAUTHORIZED,
   description: 'Refresh token is wrong.',
@@ -54,3 +37,4 @@ export const pubSuccessful = {
   status: HttpStatus.OK,
   description: 'Publications have been successfully received.'
 }
+

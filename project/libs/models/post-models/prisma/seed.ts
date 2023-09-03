@@ -13,10 +13,10 @@ async function fillDb() {
       tags: {
         create: [
             {
-              tag: '#'
+              Tag: '#'
             },
             {
-              tag: '#'
+              Tag: '#'
             },
         ]
       }
