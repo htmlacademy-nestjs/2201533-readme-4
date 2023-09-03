@@ -1,4 +1,5 @@
 import {ClassConstructor, instanceToPlain, plainToInstance} from 'class-transformer';
+import {isUppercase} from "class-validator";
 
 export type DateTimeUnit = 's' | 'h' | 'd' | 'm' | 'y';
 export type TimeInUnit = { value: number; unit: DateTimeUnit };
@@ -42,4 +43,14 @@ export function parseTime(time: string): TimeInUnit {
   }
 
   return { value, unit }
+}
+
+export function envStyleToCamelCase(env: string, firsUpper: number) {
+  return env.toLowerCase().split('_').map((item, index) =>
+  index < firsUpper ? item : item[0].toUpperCase().concat(item.substring(1))).join('');
+}
+
+export function camelCaseToEnvStyle(camel: string, prefix: string) {
+  return `${ prefix ? `${prefix.toUpperCase()}_` : ''}${camel.split('').map((letter, index) =>
+    isUppercase(letter) && index > 0 ? `_${letter}` : letter).join('').toUpperCase()}`;
 }

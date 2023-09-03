@@ -12,3 +12,5 @@ export * from './lib/post.rdo';
 export * from './lib/comment.rdo';
 export * from './lib/users/update-user.dto';
 export * from './lib/follow.rdo';
+export * from './lib/post-counter.dto';
+export * from './lib/user-counter.dto';

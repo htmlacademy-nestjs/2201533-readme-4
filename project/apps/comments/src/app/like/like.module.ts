@@ -8,5 +8,6 @@ import {PrismaModule} from '../prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [LikeController],
   providers: [LikeService, LikeRepository],
+  exports: [LikeService]
 })
 export class LikeModule {}

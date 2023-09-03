@@ -14,8 +14,8 @@ export class CommentRepository {
     })
   }
 
-  async delete(id: number): Promise<void> {
-    await this.prisma.comments.delete({
+  async delete(id: number): Promise<Comment> {
+    return this.prisma.comments.delete({
       where: {id}
     })
   }

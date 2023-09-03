@@ -1,10 +1,10 @@
 import { CRUDRepository } from '@project/util/util-types';
 import { EmailSubscriberEntity } from './email-subscriber.entity';
 import { Subscriber } from '@project/shared/shared-types';
-import {Injectable, Logger} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { EmailSubscriberModel } from './email-subscriber.model';
-import {Cursor, Model} from 'mongoose';
+import {Model} from 'mongoose';
 
 @Injectable()
 export class EmailSubscriberRepository implements CRUDRepository<EmailSubscriberEntity, string, Subscriber> {

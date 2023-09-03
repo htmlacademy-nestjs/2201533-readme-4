@@ -1,5 +1,5 @@
-import {CallHandler, ExecutionContext, Injectable, NestInterceptor} from "@nestjs/common";
-import {Observable} from "rxjs";
+import {CallHandler, ExecutionContext, Injectable, NestInterceptor} from '@nestjs/common';
+import {Observable} from 'rxjs';
 import {Type} from '@project/shared/shared-types';
 import {fillCreateDto} from '@project/shared/shared-dto';
 

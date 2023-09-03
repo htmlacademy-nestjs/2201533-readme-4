@@ -1,14 +1,14 @@
 import {Injectable} from '@nestjs/common';
 import {CRUDRepository} from '@project/util/util-types';
 import {PostEntity} from './post.entity';
-import {Counters, Post, SortFieldsEnum} from '@project/shared/shared-types';
+import {Counters, Post} from '@project/shared/shared-types';
 import {PrismaService} from '../prisma/prisma.service';
 import {PostFilter, GetPostsFilter} from './helpers/posts-filter.interface';
 import {makeGetPostsFilters} from './helpers/post-query.helpers';
 import {Prisma} from '@prisma/client/posts';
 import {SIMILARITY_LIMIT} from '@project/shared/shared-consts';
 import dayjs from 'dayjs';
-import {getShowTapeQueryText} from "./helpers/getShowTapeQueryText";
+import {getShowTapeQueryText} from './helpers/getShowTapeQueryText';
 
 @Injectable()
 export class PostRepository implements CRUDRepository<PostEntity, number, Post> {
@@ -69,8 +69,8 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     })
   }
 
-  public async delete(id: number, tx?: PrismaService): Promise<void> {
-    await tx.post.delete({
+  public async delete(id: number, tx?: PrismaService): Promise<Post> {
+    return tx.post.delete({
       where: {
         id,
       }
@@ -98,7 +98,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     const newCount = post[Counters[field]] + difference;
     const newPost = await this.prisma.post.update(
       {
-        where: {id},
+        where: {id: id},
         data: {[Counters[field]]: newCount},
       }
     )

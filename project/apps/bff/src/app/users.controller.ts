@@ -14,7 +14,7 @@ import {
   LoginUserDto, UpdateUserDto
 } from '@project/shared/shared-dto';
 import {ConfigType} from '@nestjs/config';
-import {appsConfig, fillObject} from '@project/util/util-core';
+import {fillObject} from '@project/util/util-core';
 import {ApiConsumes, ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {CreateUserDto} from '@project/shared/shared-dto';
 import {FileInterceptor} from '@nestjs/platform-express';
@@ -28,7 +28,7 @@ import {JsonPipe} from '@project/shared/shared-mediators';
 import {UserRdo} from './rdo/user.rdo';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
 import {FilesController} from './files.controller';
-import {BffService} from './bff.service';
+import {BffService} from './services/bff.service';
 import {
   apiAuthHeader, apiRefreshHeader,
   authHeader,
@@ -37,6 +37,7 @@ import {
   wrongLoginPass,
   wrongRefreshToken
 } from '@project/shared/shared-api-consts';
+import {appsConfig} from '@project/config/config-modules';
 
 
 @ApiTags('users')

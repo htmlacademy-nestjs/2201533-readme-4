@@ -3,19 +3,22 @@ import {
   Controller,
   Delete, Get, HttpCode, HttpStatus,
   Inject, Param, ParseIntPipe,
-  Post, UseFilters, UseGuards,
+  Post, UseFilters, UseGuards, ValidationPipe,
 } from '@nestjs/common';
 import {QueryRaw, Token} from '@project/shared/shared-mediators';
 import {CommentRdo, CreateCommentDto} from '@project/shared/shared-dto';
-import {appsConfig, fillObject} from '@project/util/util-core';
+import {appsConfig} from '@project/config/config-modules';
 import {HttpService} from '@nestjs/axios';
 import {ConfigType} from '@nestjs/config';
 import {ApiHeader, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {NotExistPost} from './guards/not-exist-post.guard';
 import {apiAuthHeader, authHeader, created, unauthorized} from '@project/shared/shared-api-consts';
-import {BffService} from './bff.service';
+import {BffService} from './services/bff.service';
 import {BigCommentRdo} from './rdo/big-comment.rdo';
 import {AxiosExceptionFilter} from './filters/axios-exception.filter';
+import {RabbitService} from './services/rabbit.service';
+import {Difference} from '@project/util/util-types';
+import {fillObject} from '@project/util/util-core';
 
 @ApiTags('comments')
 @Controller('comments')
@@ -24,11 +27,9 @@ export class CommentsController {
   constructor(
     private readonly httpService: HttpService,
     @Inject (appsConfig.KEY) private readonly config: ConfigType<typeof appsConfig>,
-    private readonly bffService: BffService
+    private readonly bffService: BffService,
+    private readonly notifyService: RabbitService
   ) {}
-
-  private postUrl = this.config.posts;
-  private commentUrl = this.config.comments;
 
   private async fillAuthor(data: CommentRdo) {
     const user = await this.bffService.getUser(data.authorId);
@@ -40,10 +41,10 @@ export class CommentsController {
   @ApiResponse(unauthorized)
   @ApiHeader(apiAuthHeader)
   @UseGuards(NotExistPost)
-  async create(@Body() dto: CreateCommentDto, @Token() token: string) {
+  async create(@Body(new ValidationPipe({transform: true})) dto: CreateCommentDto, @Token() token: string) {
     const {data} =
-      await this.httpService.axiosRef.post(`${this.commentUrl}`, dto, authHeader(token));
-    await this.httpService.axiosRef.post(`${this.postUrl}/${dto.idPost}/comment`);
+      await this.httpService.axiosRef.post(`${this.config.comments}`, dto, authHeader(token));
+      await this.notifyService.sendCommentsCount({difference: Difference.add, idPost: dto.idPost});
     return this.fillAuthor(data);
   }
 
@@ -52,13 +53,13 @@ export class CommentsController {
   @ApiResponse(unauthorized)
   @ApiHeader(apiAuthHeader)
   async delete(@Token() token: string, @Param('id', ParseIntPipe) id: number) {
-    await this.httpService.axiosRef.delete(`${this.commentUrl}/${id}`, authHeader(token));
-    await this.httpService.axiosRef.delete(`${this.postUrl}/${id}/comment`);
+    const {data} = await this.httpService.axiosRef.delete(`${this.config.comments}/${id}`, authHeader(token));
+    await this.notifyService.sendCommentsCount({difference: Difference.sub, idPost: data.idPost})
   }
 
   @Get('/:id')
   async index(@Param('id', ParseIntPipe) idPost: number, @QueryRaw() filters: string) {
-    const {data} = await this.httpService.axiosRef.get(`${this.commentUrl}/${idPost}${filters}`)
+    const {data} = await this.httpService.axiosRef.get(`${this.config.comments}/${idPost}${filters}`)
     const promises = data.map((item: CommentRdo) => this.fillAuthor(item))
     return await Promise.all(promises);
   }

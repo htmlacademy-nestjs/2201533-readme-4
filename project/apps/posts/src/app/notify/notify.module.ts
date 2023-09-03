@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { NotifyService } from './notify.service';
-import {RabbitMQModule} from "@golevelup/nestjs-rabbitmq";
-import {getRabbitMQOptions} from "@project/util/util-core";
+import {RabbitMQModule} from '@golevelup/nestjs-rabbitmq';
+import {getRabbitMQOptions} from '@project/shared/modules-options';
 
 @Module({
   imports: [

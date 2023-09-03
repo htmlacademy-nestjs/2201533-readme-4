@@ -22,8 +22,8 @@ export class CommentService {
     return (await this.findById(id)).authorId;
   }
 
-  async delete(id: number): Promise<void> {
-    await this.commentRepository.delete(id);
+  async delete(id: number): Promise<Comment> {
+    return this.commentRepository.delete(id);
   }
 
   async getComments(idPost: number, filters: CommentsFilterInterface) {

@@ -1,8 +1,8 @@
-import {CanActivate, ExecutionContext, Inject, Injectable} from "@nestjs/common";
-import {BffService} from "../bff.service";
-import {appsConfig} from "@project/util/util-core";
-import {ConfigType} from "@nestjs/config";
-import {NotExistsPostException} from "@project/util/util-core";
+import {CanActivate, ExecutionContext, Inject, Injectable} from '@nestjs/common';
+import {BffService} from '../services/bff.service';
+import {appsConfig} from '@project/config/config-modules';
+import {ConfigType} from '@nestjs/config';
+import {NotExistsPostException} from '@project/util/util-core';
 
 @Injectable()
 export class NotExistPost implements CanActivate {
