@@ -22,6 +22,7 @@ export class EmailSubscriberController {
 
   @RabbitSubscribe(getSubscribeOption(RabbitRoutingKeys.SendNewsPost))
   public async sendNewsPost(rdo: EmailPostInterface) {
+    console.log('send news post');
     const subscribers = await this.subscriberService.getSubscribers();
     await this.mailService.sendNewsPost(rdo, subscribers);
   }
