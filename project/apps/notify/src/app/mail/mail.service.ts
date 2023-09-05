@@ -36,8 +36,9 @@ export class MailService {
       };
     }
 
-    await Promise.all(subscribers.map((subscriber) =>
-      this.mailerService.sendMail(getMailOptions(subscriber))
+    await Promise.all(subscribers.map((subscriber) => {
+      console.log(subscriber);
+      this.mailerService.sendMail(getMailOptions(subscriber))}
     ))
   }
 }
